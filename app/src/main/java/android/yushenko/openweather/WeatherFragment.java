@@ -32,6 +32,7 @@ public class WeatherFragment extends Fragment {
     private TextView mInfoTV;
     private TextView mDateTV;
 
+
     public static WeatherFragment newInstance() {
         return new WeatherFragment();
     }
