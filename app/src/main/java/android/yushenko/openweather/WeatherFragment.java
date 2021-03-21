@@ -104,4 +104,8 @@ public class WeatherFragment extends Fragment {
         return dateFormat.format(date);
     }
 
+    private void testGit() {
+        String t = "Hello Git";
+    }
+
 }
