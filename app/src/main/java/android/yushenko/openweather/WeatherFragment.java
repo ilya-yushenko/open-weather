@@ -105,7 +105,7 @@ public class WeatherFragment extends Fragment {
     }
 
     private void testGit() {
-        String t = "Hello Git";
+        String ts = "Hello Git";
     }
 
 }
