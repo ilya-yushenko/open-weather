@@ -104,11 +104,4 @@ public class WeatherFragment extends Fragment {
         return dateFormat.format(date);
     }
 
-
-    private String getDateT(int t) {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE dd MMMM HH:mm", Locale.getDefault());
-        return dateFormat.format(date);
-    }
-
 }
