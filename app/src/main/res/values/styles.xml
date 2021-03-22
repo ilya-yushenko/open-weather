@@ -5,6 +5,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView.mySearch</item>
+    </style>
+
+    <style name="Widget.AppCompat.SearchView.mySearch" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@drawable/round_style</item>
     </style>
 
 </resources>
