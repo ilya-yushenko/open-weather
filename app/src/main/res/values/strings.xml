@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Open Weather</string>
+
+    <string name="text_no_found_search">"Поиск не дал результатов"</string>
 </resources>
