@@ -1,4 +1,6 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.ui;
+
+import android.yushenko.openweather.ui.main.WeatherFragment;
 
 import androidx.fragment.app.Fragment;
 

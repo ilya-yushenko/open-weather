@@ -1,4 +1,4 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.ui.search;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.yushenko.openweather.data.network.NetworkService;
+import android.yushenko.openweather.data.Preferences;
+import android.yushenko.openweather.R;
 import android.yushenko.openweather.search.Search;
 
 import androidx.annotation.Nullable;

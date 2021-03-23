@@ -1,6 +1,6 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.data;
 
-import android.yushenko.openweather.weatheronecall.Hourly;
+import android.yushenko.openweather.model.Hourly;
 
 import java.util.ArrayList;
 import java.util.List;

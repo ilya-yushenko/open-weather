@@ -1,4 +1,4 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.data;
 
 public class Preferences {
         public static final String APP_PREFERENCES = "mysettings";

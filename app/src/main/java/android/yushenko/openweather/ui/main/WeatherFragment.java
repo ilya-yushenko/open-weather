@@ -1,4 +1,4 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.ui.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.yushenko.openweather.weatheronecall.WeatherOneCall;
+import android.yushenko.openweather.data.DataLab;
+import android.yushenko.openweather.ui.hourly.HourlyFragment;
+import android.yushenko.openweather.data.network.NetworkService;
+import android.yushenko.openweather.data.Preferences;
+import android.yushenko.openweather.R;
+import android.yushenko.openweather.ui.search.SearchActivity;
+import android.yushenko.openweather.model.WeatherOneCall;
 
 import com.squareup.picasso.Picasso;
 

@@ -1,4 +1,4 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.data.network;
 
 import android.util.Log;
 
@@ -28,7 +28,7 @@ public class NetworkService {
 
     }
 
-    public JsonPlaceHolderApi getJsonApi() {
-        return mRetrofit.create(JsonPlaceHolderApi.class);
+    public WeatherApi getJsonApi() {
+        return mRetrofit.create(WeatherApi.class);
     }
 }
