@@ -1,10 +1,10 @@
 
-package android.yushenko.openweather.weather;
+package android.yushenko.openweather.weatheronecall;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Weather_ {
+public class WeatherHourly {
 
     @SerializedName("id")
     @Expose

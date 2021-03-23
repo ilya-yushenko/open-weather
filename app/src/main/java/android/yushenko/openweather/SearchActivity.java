@@ -116,6 +116,7 @@ public class SearchActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSettings.edit().putString(Preferences.APP_PREFERENCES_NAME, searches.get(position).getLocalNames().getRu()).apply();
                 mSettings.edit().putFloat(Preferences.APP_PREFERENCES_LAT, searches.get(position).getLat()).apply();
                 mSettings.edit().putFloat(Preferences.APP_PREFERENCES_LON, searches.get(position).getLon()).apply();
                 finish();
