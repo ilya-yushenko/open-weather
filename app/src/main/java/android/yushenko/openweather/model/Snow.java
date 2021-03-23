@@ -1,5 +1,5 @@
 
-package android.yushenko.openweather.weatheronecall;
+package android.yushenko.openweather.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

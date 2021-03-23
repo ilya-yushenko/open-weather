@@ -1,5 +1,5 @@
 
-package android.yushenko.openweather.weatheronecall;
+package android.yushenko.openweather.model;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -33,7 +33,7 @@ public class Current {
     private Double dewPoint;
     @SerializedName("uvi")
     @Expose
-    private Double uvi;
+    private Integer uvi;
     @SerializedName("clouds")
     @Expose
     private Integer clouds;
@@ -117,11 +117,11 @@ public class Current {
         this.dewPoint = dewPoint;
     }
 
-    public Double getUvi() {
+    public Integer getUvi() {
         return uvi;
     }
 
-    public void setUvi(Double uvi) {
+    public void setUvi(Integer uvi) {
         this.uvi = uvi;
     }
 

@@ -1,6 +1,7 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.ui;
 
 import android.os.Bundle;
+import android.yushenko.openweather.R;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

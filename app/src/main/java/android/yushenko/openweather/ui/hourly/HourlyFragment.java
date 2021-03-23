@@ -1,4 +1,4 @@
-package android.yushenko.openweather;
+package android.yushenko.openweather.ui.hourly;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.yushenko.openweather.weatheronecall.Hourly;
-import android.yushenko.openweather.weatheronecall.Temp;
-import android.yushenko.openweather.weatheronecall.WeatherCurrent;
+import android.yushenko.openweather.data.DataLab;
+import android.yushenko.openweather.R;
+import android.yushenko.openweather.model.Hourly;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
