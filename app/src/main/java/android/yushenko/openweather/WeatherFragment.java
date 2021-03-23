@@ -66,7 +66,6 @@ public class WeatherFragment extends Fragment {
                 Log.i("TAG", "Hello city!");
             }
         });
-        update();
         return view;
     }
 
@@ -75,6 +74,7 @@ public class WeatherFragment extends Fragment {
         super.onResume();
         update();
     }
+
 
     private void requestWeatherOneCall(String name, double lat, double lon) {
         Call<WeatherOneCall> call = NetworkService.getInstance().getJsonApi().getWeatherOneCall(lat, lon);
@@ -126,7 +126,8 @@ public class WeatherFragment extends Fragment {
                     .add(R.id.hourly_container, fragment).commit();
         } else {
             fragment = HourlyFragment.newInstance();
-            fm.beginTransaction().replace(R.id.hourly_container, fragment).commit();
+            fm.beginTransaction()
+                    .replace(R.id.hourly_container, fragment).commit();
         }
     }
 
