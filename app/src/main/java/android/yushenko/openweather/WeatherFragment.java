@@ -15,8 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.yushenko.openweather.search.Search;
-import android.yushenko.openweather.weather.Weather;
+import android.yushenko.openweather.weatheronecall.WeatherOneCall;
 
 import com.squareup.picasso.Picasso;
 
@@ -77,44 +76,58 @@ public class WeatherFragment extends Fragment {
         update();
     }
 
-    private void requestWeather(double lat, double lon) {
-
-        Call<Weather> call = NetworkService.getInstance().getJsonApi().getWeather(lat, lon);
-
-        call.enqueue(new Callback<Weather>() {
+    private void requestWeatherOneCall(String name, double lat, double lon) {
+        Call<WeatherOneCall> call = NetworkService.getInstance().getJsonApi().getWeatherOneCall(lat, lon);
+        call.enqueue(new Callback<WeatherOneCall>() {
             @Override
-            public void onResponse(Call<Weather> call, Response<Weather> response) {
-                Weather weather = response.body();
+            public void onResponse(Call<WeatherOneCall> call, Response<WeatherOneCall> response) {
+                WeatherOneCall weather = response.body();
+                DataLab.get().addHourlyList(weather.getHourly());
+                setFragment();
 
                 Picasso.with(getActivity())
-                        .load("http://openweathermap.org/img/wn/" + weather.getWeather().get(0).getIcon() + "@2x.png")
+                        .load("http://openweathermap.org/img/wn/" + weather.getCurrent().getWeather().get(0).getIcon() + "@2x.png")
                         .resize(100, 100)
                         .into(mImageView);
 
                 mDateTV.setText(getDate());
-                mCityTextView.setText(weather.getName());
-                mDescTextView.setText(weather.getWeather().get(0).getDescription());
-                mTempTextView.setText(weather.getMain().getTemp().intValue() + "°");
+                mCityTextView.setText(name);
 
-                mInfoTV.setText(String.format("%-15s%15s %n", "Восход солнца", getTime(weather.getSys().getSunrise())));
-                mInfoTV.append(String.format("%-15s%16s %n", "Заход солнца", getTime(weather.getSys().getSunset())));
-                mInfoTV.append(String.format("%-15s%11d°%n", "Чувствуется как", weather.getMain().getFeelsLike().intValue()));
-                mInfoTV.append(String.format("%-15s%15d %%%n", "Влажность", weather.getMain().getHumidity()));
-                mInfoTV.append(String.format("%-15s%18d гПа%n", "Давление", weather.getMain().getPressure()));
-                mInfoTV.append(String.format("%-15s%15d %%%n", "Облачность", weather.getClouds().getAll()));
-                mInfoTV.append(String.format("%-15s%14d км%n", "Видимость", weather.getVisibility() / 1000));
-                mInfoTV.append(String.format("%-15s%12.1f м/с%n", "Скорость ветра", weather.getWind().getSpeed()));
-                if (weather.getWind().getGust() != null) {
-                    mInfoTV.append(String.format("%-15s%14.1f м/с%n", "Порыв ветра", weather.getWind().getGust()));
+                mDescTextView.setText(weather.getCurrent().getWeather().get(0).getDescription());
+                mTempTextView.setText(weather.getCurrent().getTemp().intValue() + "°");
+
+                mInfoTV.setText(String.format("%-15s%15s %n", "Восход солнца", getTime(weather.getCurrent().getSunrise())));
+                mInfoTV.append(String.format("%-15s%16s %n", "Заход солнца", getTime(weather.getCurrent().getSunset())));
+                mInfoTV.append(String.format("%-15s%11d°%n", "Чувствуется как", weather.getCurrent().getFeelsLike().intValue()));
+                mInfoTV.append(String.format("%-15s%15d %%%n", "Влажность", weather.getCurrent().getHumidity()));
+                mInfoTV.append(String.format("%-15s%18d гПа%n", "Давление", weather.getCurrent().getPressure()));
+                mInfoTV.append(String.format("%-15s%14d %%%n", "Облачность", weather.getCurrent().getClouds()));
+                mInfoTV.append(String.format("%-15s%14d км%n", "Видимость", weather.getCurrent().getVisibility() / 1000));
+                mInfoTV.append(String.format("%-15s%15d%n", "Уф-индекс", weather.getCurrent().getUvi().intValue()));
+                mInfoTV.append(String.format("%-15s%12.1f м/с%n", "Скорость ветра", weather.getCurrent().getWindSpeed()));
+                if (weather.getCurrent().getWindGust() != null) {
+                    mInfoTV.append(String.format("%-15s%14.1f м/с%n", "Порыв ветра", weather.getCurrent().getWindGust()));
                 }
-
             }
 
             @Override
-            public void onFailure(Call<Weather> call, Throwable t) {
+            public void onFailure(Call<WeatherOneCall> call, Throwable t) {
                 Log.i("TAG", "TT " + t);
             }
         });
+    }
+
+    private void setFragment() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.hourly_container);
+        if (fragment == null) {
+            fragment = HourlyFragment.newInstance();
+            fm.beginTransaction()
+                    .add(R.id.hourly_container, fragment).commit();
+        } else {
+            fragment = HourlyFragment.newInstance();
+            fm.beginTransaction().replace(R.id.hourly_container, fragment).commit();
+        }
     }
 
     private String getTime(long seconds) {
@@ -130,8 +143,9 @@ public class WeatherFragment extends Fragment {
     }
 
     private void update() {
+        String name = mSettings.getString(Preferences.APP_PREFERENCES_NAME, "Киев");
         double lat = mSettings.getFloat(Preferences.APP_PREFERENCES_LAT, 50.4333f);
         double lon = mSettings.getFloat(Preferences.APP_PREFERENCES_LON, 30.5167f);
-        requestWeather(lat, lon);
+        requestWeatherOneCall(name, lat, lon);
     }
 }
