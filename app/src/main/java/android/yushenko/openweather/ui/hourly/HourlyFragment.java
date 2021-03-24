@@ -36,7 +36,7 @@ public class HourlyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_fragment, container, false);
+        View view = inflater.inflate(R.layout.list_hourly_fragment, container, false);
 
         mRecyclerView = view.findViewById(R.id.rec_view);
         mRecyclerView.setLayoutManager(
@@ -77,7 +77,7 @@ public class HourlyFragment extends Fragment {
         private TextView mTempTV;
 
         public HourlyHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.item_list, parent, false));
+            super(inflater.inflate(R.layout.item_hourly_list, parent, false));
             mHourTV = itemView.findViewById(R.id.hour_text);
             mWindTV = itemView.findViewById(R.id.wind_text);
             mIconIV = itemView.findViewById(R.id.icon_image);

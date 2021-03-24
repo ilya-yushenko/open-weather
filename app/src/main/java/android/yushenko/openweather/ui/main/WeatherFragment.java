@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.yushenko.openweather.data.DataLab;
+import android.yushenko.openweather.ui.daily.DailyFragment;
 import android.yushenko.openweather.ui.hourly.HourlyFragment;
 import android.yushenko.openweather.data.network.NetworkService;
 import android.yushenko.openweather.data.Preferences;
@@ -39,8 +41,11 @@ public class WeatherFragment extends Fragment {
     private ImageView mImageView;
     private TextView mDescTextView;
     private TextView mTempTextView;
-    private TextView mInfoTV;
+    private TextView mInfoTitleTV;
+    private TextView mInfoDataTV;
     private TextView mDateTV;
+
+    private SwipeRefreshLayout mRefreshLayout;
 
     private SharedPreferences mSettings;
 
@@ -61,7 +66,8 @@ public class WeatherFragment extends Fragment {
         mDescTextView = view.findViewById(R.id.description_tv);
         mTempTextView = view.findViewById(R.id.temp_tv);
 
-        mInfoTV = view.findViewById(R.id.info_tv);
+        mInfoTitleTV = view.findViewById(R.id.info_title_tv);
+        mInfoDataTV = view.findViewById(R.id.info_data_tv);
         mDateTV = view.findViewById(R.id.date_tv);
 
         mCityTextView.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,15 @@ public class WeatherFragment extends Fragment {
                 Log.i("TAG", "Hello city!");
             }
         });
+
+        mRefreshLayout = view.findViewById(R.id.swipe_refresh);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                update();
+            }
+        });
+
         return view;
     }
 
@@ -87,9 +102,12 @@ public class WeatherFragment extends Fragment {
         call.enqueue(new Callback<WeatherOneCall>() {
             @Override
             public void onResponse(Call<WeatherOneCall> call, Response<WeatherOneCall> response) {
+                mRefreshLayout.setRefreshing(false);
                 WeatherOneCall weather = response.body();
                 DataLab.get().addHourlyList(weather.getHourly());
-                setFragment();
+                DataLab.get().addDailyList(weather.getDaily());
+                setHourlyFragment();
+                setDailyFragment();
 
                 Picasso.with(getActivity())
                         .load("http://openweathermap.org/img/wn/" + weather.getCurrent().getWeather().get(0).getIcon() + "@2x.png")
@@ -102,17 +120,35 @@ public class WeatherFragment extends Fragment {
                 mDescTextView.setText(weather.getCurrent().getWeather().get(0).getDescription());
                 mTempTextView.setText(weather.getCurrent().getTemp().intValue() + "°");
 
-                mInfoTV.setText(String.format("%-15s%15s %n", "Восход солнца", getTime(weather.getCurrent().getSunrise())));
-                mInfoTV.append(String.format("%-15s%16s %n", "Заход солнца", getTime(weather.getCurrent().getSunset())));
-                mInfoTV.append(String.format("%-15s%11d°%n", "Чувствуется как", weather.getCurrent().getFeelsLike().intValue()));
-                mInfoTV.append(String.format("%-15s%15d %%%n", "Влажность", weather.getCurrent().getHumidity()));
-                mInfoTV.append(String.format("%-15s%18d гПа%n", "Давление", weather.getCurrent().getPressure()));
-                mInfoTV.append(String.format("%-15s%14d %%%n", "Облачность", weather.getCurrent().getClouds()));
-                mInfoTV.append(String.format("%-15s%14d км%n", "Видимость", weather.getCurrent().getVisibility() / 1000));
-                mInfoTV.append(String.format("%-15s%15d%n", "Уф-индекс", weather.getCurrent().getUvi().intValue()));
-                mInfoTV.append(String.format("%-15s%12.1f м/с%n", "Скорость ветра", weather.getCurrent().getWindSpeed()));
+                mInfoTitleTV.setText("Восход солнца\n");
+                mInfoDataTV.setText(getTime(weather.getCurrent().getSunrise()) + "\n");
+
+                mInfoTitleTV.append("Заход солнца\n");
+                mInfoDataTV.append(getTime(weather.getCurrent().getSunset()) + "\n");
+
+                mInfoTitleTV.append("Чувствуется как\n");
+                mInfoDataTV.append(weather.getCurrent().getFeelsLike().intValue() + "°\n");
+
+                mInfoTitleTV.append("Влажность\n");
+                mInfoDataTV.append(weather.getCurrent().getHumidity() + " %\n");
+
+                mInfoTitleTV.append("Давление\n");
+                mInfoDataTV.append(weather.getCurrent().getPressure() + " гПа\n" );
+
+                mInfoTitleTV.append("Облачность\n");
+                mInfoDataTV.append(weather.getCurrent().getClouds() + " %\n");
+
+                mInfoTitleTV.append("Видимость\n");
+                mInfoDataTV.append(weather.getCurrent().getVisibility() / 1000 +" км\n");
+
+                mInfoTitleTV.append("Уф-индекс\n");
+                mInfoDataTV.append(weather.getCurrent().getUvi().intValue() + "\n");
+
+                mInfoTitleTV.append("Скорость ветра\n");
+                mInfoDataTV.append(weather.getCurrent().getWindSpeed() + " м/с\n");
                 if (weather.getCurrent().getWindGust() != null) {
-                    mInfoTV.append(String.format("%-15s%14.1f м/с%n", "Порыв ветра", weather.getCurrent().getWindGust()));
+                    mInfoTitleTV.append("Порыв ветра\n");
+                    mInfoDataTV.append(weather.getCurrent().getWindGust() + " м/с\n");
                 }
             }
 
@@ -123,7 +159,7 @@ public class WeatherFragment extends Fragment {
         });
     }
 
-    private void setFragment() {
+    private void setHourlyFragment() {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.hourly_container);
         if (fragment == null) {
@@ -134,6 +170,20 @@ public class WeatherFragment extends Fragment {
             fragment = HourlyFragment.newInstance();
             fm.beginTransaction()
                     .replace(R.id.hourly_container, fragment).commit();
+        }
+    }
+
+    private void setDailyFragment() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        Fragment fragment = fm.findFragmentById(R.id.daily_container);
+        if (fragment == null) {
+            fragment = DailyFragment.newInstance();
+            fm.beginTransaction()
+                    .add(R.id.daily_container, fragment).commit();
+        } else {
+            fragment = DailyFragment.newInstance();
+            fm.beginTransaction()
+                    .replace(R.id.daily_container, fragment).commit();
         }
     }
 

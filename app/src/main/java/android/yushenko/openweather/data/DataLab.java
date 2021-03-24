@@ -1,5 +1,6 @@
 package android.yushenko.openweather.data;
 
+import android.yushenko.openweather.model.Daily;
 import android.yushenko.openweather.model.Hourly;
 
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import java.util.List;
 public class DataLab {
 
     private static DataLab sDataLab;
-    private List<Hourly> mList;
+    private List<Hourly> mHourlyList;
+    private List<Daily> mDailyList;
 
     public static DataLab get() {
         if (sDataLab == null) {
@@ -18,14 +20,23 @@ public class DataLab {
     }
 
     private DataLab() {
-        mList = new ArrayList<>();
+        mHourlyList = new ArrayList<>();
+        mDailyList = new ArrayList<>();
     }
 
     public void addHourlyList(List<Hourly> list) {
-        mList = list;
+        mHourlyList = list;
     }
 
     public List<Hourly> getHourlyList() {
-        return mList;
+        return mHourlyList;
+    }
+
+    public void addDailyList(List<Daily> list) {
+        mDailyList = list;
+    }
+
+    public List<Daily> getDailyList() {
+        return mDailyList;
     }
 }
