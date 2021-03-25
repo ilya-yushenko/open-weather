@@ -1,54 +1,22 @@
+package android.yushenko.openweather.model
 
-package android.yushenko.openweather.model;
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-public class FeelsLike {
-
+data class FeelsLike (
     @SerializedName("day")
     @Expose
-    private Double day;
+    var day: Double? = null,
+
     @SerializedName("night")
     @Expose
-    private Double night;
+    var night: Double? = null,
+
     @SerializedName("eve")
     @Expose
-    private Double eve;
+    var eve: Double? = null,
+
     @SerializedName("morn")
     @Expose
-    private Double morn;
-
-    public Double getDay() {
-        return day;
-    }
-
-    public void setDay(Double day) {
-        this.day = day;
-    }
-
-    public Double getNight() {
-        return night;
-    }
-
-    public void setNight(Double night) {
-        this.night = night;
-    }
-
-    public Double getEve() {
-        return eve;
-    }
-
-    public void setEve(Double eve) {
-        this.eve = eve;
-    }
-
-    public Double getMorn() {
-        return morn;
-    }
-
-    public void setMorn(Double morn) {
-        this.morn = morn;
-    }
-
-}
+    var morn: Double? = null
+)

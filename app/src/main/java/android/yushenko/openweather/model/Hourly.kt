@@ -1,176 +1,66 @@
+package android.yushenko.openweather.model
 
-package android.yushenko.openweather.model;
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-public class Hourly {
-
+data class Hourly (
     @SerializedName("dt")
     @Expose
-    private Integer dt;
+    var dt: Int? = null,
+
     @SerializedName("temp")
     @Expose
-    private Double temp;
+    var temp: Double? = null,
+
     @SerializedName("feels_like")
     @Expose
-    private Double feelsLike;
+    var feelsLike: Double? = null,
+
     @SerializedName("pressure")
     @Expose
-    private Integer pressure;
+    var pressure: Int? = null,
+
     @SerializedName("humidity")
     @Expose
-    private Integer humidity;
+    var humidity: Int? = null,
+
     @SerializedName("dew_point")
     @Expose
-    private Double dewPoint;
+    var dewPoint: Double? = null,
+
     @SerializedName("uvi")
     @Expose
-    private Double uvi;
+    var uvi: Double? = null,
+
     @SerializedName("clouds")
     @Expose
-    private Integer clouds;
+    var clouds: Int? = null,
+
     @SerializedName("visibility")
     @Expose
-    private Integer visibility;
+    var visibility: Int? = null,
+
     @SerializedName("wind_speed")
     @Expose
-    private Double windSpeed;
+    var windSpeed: Double? = null,
+
     @SerializedName("wind_deg")
     @Expose
-    private Integer windDeg;
+    var windDeg: Int? = null,
+
     @SerializedName("wind_gust")
     @Expose
-    private Double windGust;
+    var windGust: Double? = null,
+
     @SerializedName("weather")
     @Expose
-    private List<WeatherHourly> weather = null;
+    var weather: List<WeatherHourly>? = null,
+
     @SerializedName("pop")
     @Expose
-    private Double pop;
+    var pop: Double? = null,
+
     @SerializedName("snow")
     @Expose
-    private Snow snow;
-
-    public Integer getDt() {
-        return dt;
-    }
-
-    public void setDt(Integer dt) {
-        this.dt = dt;
-    }
-
-    public Double getTemp() {
-        return temp;
-    }
-
-    public void setTemp(Double temp) {
-        this.temp = temp;
-    }
-
-    public Double getFeelsLike() {
-        return feelsLike;
-    }
-
-    public void setFeelsLike(Double feelsLike) {
-        this.feelsLike = feelsLike;
-    }
-
-    public Integer getPressure() {
-        return pressure;
-    }
-
-    public void setPressure(Integer pressure) {
-        this.pressure = pressure;
-    }
-
-    public Integer getHumidity() {
-        return humidity;
-    }
-
-    public void setHumidity(Integer humidity) {
-        this.humidity = humidity;
-    }
-
-    public Double getDewPoint() {
-        return dewPoint;
-    }
-
-    public void setDewPoint(Double dewPoint) {
-        this.dewPoint = dewPoint;
-    }
-
-    public Double getUvi() {
-        return uvi;
-    }
-
-    public void setUvi(Double uvi) {
-        this.uvi = uvi;
-    }
-
-    public Integer getClouds() {
-        return clouds;
-    }
-
-    public void setClouds(Integer clouds) {
-        this.clouds = clouds;
-    }
-
-    public Integer getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(Integer visibility) {
-        this.visibility = visibility;
-    }
-
-    public Double getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(Double windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public Integer getWindDeg() {
-        return windDeg;
-    }
-
-    public void setWindDeg(Integer windDeg) {
-        this.windDeg = windDeg;
-    }
-
-    public Double getWindGust() {
-        return windGust;
-    }
-
-    public void setWindGust(Double windGust) {
-        this.windGust = windGust;
-    }
-
-    public List<WeatherHourly> getWeather() {
-        return weather;
-    }
-
-    public void setWeather(List<WeatherHourly> weather) {
-        this.weather = weather;
-    }
-
-    public Double getPop() {
-        return pop;
-    }
-
-    public void setPop(Double pop) {
-        this.pop = pop;
-    }
-
-    public Snow getSnow() {
-        return snow;
-    }
-
-    public void setSnow(Snow snow) {
-        this.snow = snow;
-    }
-
-}
+    var snow: Snow? = null
+)

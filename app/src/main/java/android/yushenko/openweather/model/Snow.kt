@@ -1,21 +1,17 @@
+package android.yushenko.openweather.model
 
-package android.yushenko.openweather.model;
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-public class Snow {
-
+class Snow {
     @SerializedName("1h")
     @Expose
-    private Double _1h;
-
-    public Double get1h() {
-        return _1h;
+    private var _1h: Double? = null
+    fun get1h(): Double? {
+        return _1h
     }
 
-    public void set1h(Double _1h) {
-        this._1h = _1h;
+    fun set1h(_1h: Double?) {
+        this._1h = _1h
     }
-
 }
