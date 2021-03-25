@@ -1,8 +1,8 @@
-package android.yushenko.openweather.data;
+package android.yushenko.openweather.data
 
-public class Preferences {
-        public static final String APP_PREFERENCES = "mysettings";
-        public static final String APP_PREFERENCES_NAME = "name";
-        public static final String APP_PREFERENCES_LAT= "lat";
-        public static final String APP_PREFERENCES_LON = "lon";
+object Preferences {
+    const val APP_PREFERENCES = "mysettings"
+    const val APP_PREFERENCES_NAME = "name"
+    const val APP_PREFERENCES_LAT = "lat"
+    const val APP_PREFERENCES_LON = "lon"
 }

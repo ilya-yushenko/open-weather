@@ -1,42 +1,35 @@
-package android.yushenko.openweather.data;
+package android.yushenko.openweather.data
 
-import android.yushenko.openweather.model.Daily;
-import android.yushenko.openweather.model.Hourly;
+import android.yushenko.openweather.model.Daily
+import android.yushenko.openweather.model.Hourly
+import java.util.*
 
-import java.util.ArrayList;
-import java.util.List;
+class DataLab private constructor() {
+    var hourlyList: List<Hourly>
+        private set
+    var dailyList: List<Daily>
+        private set
 
-public class DataLab {
+    fun addHourlyList(list: List<Hourly>?) {
+        hourlyList = list!!
+    }
 
-    private static DataLab sDataLab;
-    private List<Hourly> mHourlyList;
-    private List<Daily> mDailyList;
+    fun addDailyList(list: List<Daily>?) {
+        dailyList = list!!
+    }
 
-    public static DataLab get() {
-        if (sDataLab == null) {
-            sDataLab = new DataLab();
+    companion object {
+        private var sDataLab: DataLab? = null
+        fun get(): DataLab? {
+            if (sDataLab == null) {
+                sDataLab = DataLab()
+            }
+            return sDataLab
         }
-        return sDataLab;
     }
 
-    private DataLab() {
-        mHourlyList = new ArrayList<>();
-        mDailyList = new ArrayList<>();
-    }
-
-    public void addHourlyList(List<Hourly> list) {
-        mHourlyList = list;
-    }
-
-    public List<Hourly> getHourlyList() {
-        return mHourlyList;
-    }
-
-    public void addDailyList(List<Daily> list) {
-        mDailyList = list;
-    }
-
-    public List<Daily> getDailyList() {
-        return mDailyList;
+    init {
+        hourlyList = ArrayList()
+        dailyList = ArrayList()
     }
 }
