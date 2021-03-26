@@ -1,65 +1,26 @@
+package android.yushenko.openweather.search
 
-package android.yushenko.openweather.search;
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+data class Search(
+        @SerializedName("name")
+        @Expose
+        var name: String? = null,
 
-public class Search {
+        @SerializedName("local_names")
+        @Expose
+        var localNames: LocalNames? = null,
 
-    @SerializedName("name")
-    @Expose
-    private String name;
-    @SerializedName("local_names")
-    @Expose
-    private LocalNames localNames;
-    @SerializedName("lat")
-    @Expose
-    private float lat;
-    @SerializedName("lon")
-    @Expose
-    private float lon;
-    @SerializedName("country")
-    @Expose
-    private String country;
+        @SerializedName("lat")
+        @Expose
+        var lat: Float = 0f,
 
-    public String getName() {
-        return name;
-    }
+        @SerializedName("lon")
+        @Expose
+        var lon: Float = 0f,
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalNames getLocalNames() {
-        return localNames;
-    }
-
-    public void setLocalNames(LocalNames localNames) {
-        this.localNames = localNames;
-    }
-
-    public float getLat() {
-        return lat;
-    }
-
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public float getLon() {
-        return lon;
-    }
-
-    public void setLon(float lon) {
-        this.lon = lon;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-}
+        @SerializedName("country")
+        @Expose
+        var country: String? = null,
+)
