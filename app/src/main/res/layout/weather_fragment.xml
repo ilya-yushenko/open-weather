@@ -28,7 +28,6 @@
                 android:background="@drawable/round_style"
                 android:backgroundTint="@color/colorBackground"
                 android:elevation="2dp"
-                android:text="Город"
                 android:textSize="22dp"
                 android:drawableLeft="@drawable/ic_baseline_location_on_24"
                 android:layout_marginTop="20dp"
