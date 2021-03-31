@@ -74,15 +74,15 @@
                 android:textSize="70dp"
                 />
 
-            <FrameLayout
-                android:id="@+id/hourly_container"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_hourly_view"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:padding="2dp"
                 android:layout_marginTop="10dp"/>
 
-            <FrameLayout
-                android:id="@+id/daily_container"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rec_daily_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="2dp"
