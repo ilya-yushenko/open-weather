@@ -1,4 +1,4 @@
-package android.yushenko.openweather.data
+package android.yushenko.openweather.data.preferences
 
 object Preferences {
     const val APP_PREFERENCES = "mysettings"

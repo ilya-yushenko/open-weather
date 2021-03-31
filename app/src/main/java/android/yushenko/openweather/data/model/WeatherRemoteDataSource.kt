@@ -1,27 +1,28 @@
 package android.yushenko.openweather.data
 
 import android.content.Context
+import android.util.Log
 import android.yushenko.openweather.data.network.common.Common
+import android.yushenko.openweather.data.preferences.AppPreferences
+import android.yushenko.openweather.data.preferences.Preferences
 import android.yushenko.openweather.model.WeatherOneCall
+import android.yushenko.openweather.search.Search
 import retrofit2.Callback
 import retrofit2.Response
 
-class WeatherRemoteDataSource(context: Context) {
+class WeatherRemoteDataSource() {
+    private lateinit var search: Search
 
-    val settings = context.getSharedPreferences(Preferences.APP_PREFERENCES, Context.MODE_PRIVATE)
+    fun setData(search: Search) {
+        this.search = search
+    }
 
     fun getWeatherData(onWeatherRemoteReadyCallback: OnWeatherRemoteReadyCallback) {
-
-        val name: String? = settings.getString(Preferences.APP_PREFERENCES_NAME, "Киев")
-        val lat: Double = settings.getFloat(Preferences.APP_PREFERENCES_LAT, 50.4333f).toDouble()
-        val lon: Double = settings.getFloat(Preferences.APP_PREFERENCES_LON, 30.5167f).toDouble()
-
-
-        Common.weatherApi.getWeatherOneCall(lat, lon)
+        Common.weatherApi.getWeatherOneCall(search.lat.toDouble(), search.lon.toDouble())
                 .enqueue(object : Callback<WeatherOneCall> {
                     override fun onResponse(call: retrofit2.Call<WeatherOneCall>, response: Response<WeatherOneCall>) {
-                        var weatherOneCall = response.body()
-                        weatherOneCall?.nameLocale = name
+                        val weatherOneCall = response.body()
+                        weatherOneCall?.nameLocale = search.name
 
                         onWeatherRemoteReadyCallback.onRemoteDataReady(response.body())
                     }
