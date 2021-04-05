@@ -6,11 +6,14 @@ import android.view.View
 import android.widget.*
 import android.yushenko.openweather.R
 import android.yushenko.openweather.data.viewmodel.WeatherViewModel
-import android.yushenko.openweather.search.Search
-import android.yushenko.openweather.ui.main.WeatherFragment
+import android.yushenko.openweather.model.search.Search
+import android.yushenko.openweather.ui.MainActivity
+import android.yushenko.openweather.ui.main.MainFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
+import kotlinx.android.synthetic.main.search_fragment.*
 
 
 class SearchFragment : Fragment(R.layout.search_fragment) {
@@ -19,12 +22,6 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
     private lateinit var infoTV: TextView
     private lateinit var listView: ListView
     private val viewModel: WeatherViewModel by viewModels()
-
-    companion object {
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupObserving()
@@ -47,15 +44,12 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
                 return true
             }
         })
-        view.findViewById<View>(R.id.edit_bask).setOnClickListener {
-            toBack()
-        }
+
+        edit_bask.setOnClickListener { toBack() }
     }
 
     private fun toBack() {
-        val fm = requireActivity().supportFragmentManager
-        fm.beginTransaction().replace(R.id.fragment_container,
-                WeatherFragment.newInstance()).commit()
+        (activity as MainActivity).navController.navigate(R.id.action_searchFragment_to_mainFragment)
     }
 
     private fun setupObserving() {
@@ -63,7 +57,7 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
             listShow(it)
 
         })
-        viewModel.liveIsFound.observe(requireActivity(), { visible(it) })
+        viewModel.liveIsFound.observe(requireActivity()) { visible(it) }
     }
 
     private fun visible(found: Boolean) {

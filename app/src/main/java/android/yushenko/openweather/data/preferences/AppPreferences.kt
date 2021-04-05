@@ -1,12 +1,14 @@
 package android.yushenko.openweather.data.preferences
 
 import android.content.Context
-import android.yushenko.openweather.search.Search
+import android.yushenko.openweather.data.model.firebase.DataBaseFirebase
+import android.yushenko.openweather.model.search.Search
 
 class AppPreferences(context: Context) {
 
     private val settings = context.getSharedPreferences(Preferences.APP_PREFERENCES, Context.MODE_PRIVATE)
     private val search = Search()
+
 
     fun getSearchPreference(): Search {
         search.name = settings.getString(Preferences.APP_PREFERENCES_NAME, "Киев")

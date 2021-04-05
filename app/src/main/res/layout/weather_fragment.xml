@@ -1,42 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:scrollbars="none"
-        android:background="@color/colorBackground">
+        android:scrollbars="none">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/round_style"
+            android:backgroundTint="@color/colorBackground"
+            android:elevation="2dp"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/image_refresh_click"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_refresh_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/image_delete_click"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_delete_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/city_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:background="@drawable/round_style"
-                android:backgroundTint="@color/colorBackground"
-                android:elevation="2dp"
-                android:textSize="22dp"
+                android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/ic_baseline_location_on_24"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:paddingRight="15dp"
+                android:elevation="2dp"
+                android:gravity="center"
                 android:paddingLeft="15dp"
                 android:paddingTop="2dp"
+                android:paddingRight="15dp"
                 android:paddingBottom="2dp"
-                />
+                android:textSize="22dp"
+                app:layout_constraintEnd_toStartOf="@+id/image_delete_click"
+                app:layout_constraintHorizontal_bias="0.486"
+                app:layout_constraintStart_toEndOf="@+id/image_refresh_click"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/date_tv"
@@ -44,9 +73,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text=""
-                android:textStyle="bold"
                 android:textSize="18dp"
-                />
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/city_tv" />
 
             <ImageView
                 android:id="@+id/view_image"
@@ -54,8 +83,10 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_baseline_cloud_queue_24"/>
+                android:src="@drawable/ic_baseline_cloud_queue_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date_tv" />
 
             <TextView
                 android:id="@+id/description_tv"
@@ -63,69 +94,87 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="18dp"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/view_image" />
 
             <TextView
                 android:id="@+id/temp_tv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text=""
                 android:textSize="70dp"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_tv" />
+
+            <TextView
+                android:id="@+id/tem_icon_unit_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="70dp"
+                app:layout_constraintBottom_toBottomOf="@+id/temp_tv"
+                app:layout_constraintStart_toEndOf="@+id/temp_tv"
+                app:layout_constraintTop_toBottomOf="@+id/description_tv" />
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_hourly_view"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/temp_tv" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rec_daily_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="2dp"
-                android:layout_marginTop="10dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rec_hourly_view" />
 
             <TextView
+                android:id="@+id/text_today"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="5dp"
                 android:textSize="20dp"
-                android:text="Сегодня:"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rec_daily_view" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_today">
 
                 <TextView
                     android:id="@+id/info_title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="20dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textSize="20dp" />
 
                 <TextView
                     android:id="@+id/info_data_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="20dp"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2"
+                    android:textSize="20dp" />
             </LinearLayout>
 
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+

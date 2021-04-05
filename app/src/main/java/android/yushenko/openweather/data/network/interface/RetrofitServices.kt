@@ -1,7 +1,7 @@
 package android.yushenko.openweather.data.network.`interface`
 
-import android.yushenko.openweather.model.WeatherOneCall
-import android.yushenko.openweather.search.Search
+import android.yushenko.openweather.model.weather.WeatherOneCall
+import android.yushenko.openweather.model.search.Search
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

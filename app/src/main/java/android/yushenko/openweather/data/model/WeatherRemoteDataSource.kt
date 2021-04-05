@@ -1,23 +1,19 @@
 package android.yushenko.openweather.data
 
-import android.content.Context
-import android.util.Log
 import android.yushenko.openweather.data.network.common.Common
-import android.yushenko.openweather.data.preferences.AppPreferences
-import android.yushenko.openweather.data.preferences.Preferences
-import android.yushenko.openweather.model.WeatherOneCall
-import android.yushenko.openweather.search.Search
+import android.yushenko.openweather.model.weather.WeatherOneCall
+import android.yushenko.openweather.model.search.Search
 import retrofit2.Callback
 import retrofit2.Response
 
-class WeatherRemoteDataSource() {
-    private lateinit var search: Search
+class WeatherRemoteDataSource {
+//    private lateinit var search: Search
+//
+//    fun setData(search: Search) {
+//        this.search = search
+//    }
 
-    fun setData(search: Search) {
-        this.search = search
-    }
-
-    fun getWeatherData(onWeatherRemoteReadyCallback: OnWeatherRemoteReadyCallback) {
+    fun getWeatherData(search: Search, onWeatherRemoteReadyCallback: OnWeatherRemoteReadyCallback) {
         Common.weatherApi.getWeatherOneCall(search.lat.toDouble(), search.lon.toDouble())
                 .enqueue(object : Callback<WeatherOneCall> {
                     override fun onResponse(call: retrofit2.Call<WeatherOneCall>, response: Response<WeatherOneCall>) {
