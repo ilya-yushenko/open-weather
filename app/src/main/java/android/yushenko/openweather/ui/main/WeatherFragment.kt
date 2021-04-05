@@ -6,17 +6,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.yushenko.openweather.R
 import android.yushenko.openweather.data.viewmodel.WeatherViewModel
-import android.yushenko.openweather.ui.search.SearchFragment
+import android.yushenko.openweather.model.search.Search
+import android.yushenko.openweather.model.weather.WeatherOneCall
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.weather_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WeatherFragment : Fragment(R.layout.weather_fragment) {
+
+    private lateinit var search: Search
 
     private lateinit var mCityTextView: TextView
     private lateinit var mImageView: ImageView
@@ -26,7 +31,10 @@ class WeatherFragment : Fragment(R.layout.weather_fragment) {
     private lateinit var mInfoDataTV: TextView
     private lateinit var mDateTV: TextView
 
-    private lateinit var mRefreshLayout: SwipeRefreshLayout
+    private lateinit var deleteClick: ImageView
+    private lateinit var refreshClick: ImageView
+
+    private lateinit var refreshLayout: SwipeRefreshLayout
 
     private lateinit var recyclerViewHourly: RecyclerView
     private lateinit var recyclerViewDaily: RecyclerView
@@ -42,38 +50,41 @@ class WeatherFragment : Fragment(R.layout.weather_fragment) {
         }
     }
 
+    fun setData(search: Search) {
+        this.search = search
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mCityTextView = view.findViewById(R.id.city_tv)
         mImageView = view.findViewById(R.id.view_image)
         mDescTextView = view.findViewById(R.id.description_tv)
         mTempTextView = view.findViewById(R.id.temp_tv)
-
         mInfoTitleTV = view.findViewById(R.id.info_title_tv)
         mInfoDataTV = view.findViewById(R.id.info_data_tv)
         mDateTV = view.findViewById(R.id.date_tv)
 
-        mCityTextView.setOnClickListener {
-            val fm = requireActivity().supportFragmentManager
-            fm.beginTransaction().replace(R.id.fragment_container,
-                    SearchFragment.newInstance()).commit()
+        deleteClick = view.findViewById(R.id.image_delete_click)
+        deleteClick.setOnClickListener { viewModel.deleteItemsFirebase(search) }
+
+        refreshClick = view.findViewById(R.id.image_refresh_click)
+        refreshClick.setOnClickListener {
+            refreshLayout.isRefreshing = true
+            refreshLayout.drawingTime.and(1000)
+            updateData()
         }
 
-        mRefreshLayout = view.findViewById(R.id.swipe_refresh)
-        mRefreshLayout.setOnRefreshListener { update() }
+        refreshLayout = view.findViewById(R.id.swipe_refresh)
+        refreshLayout.setOnRefreshListener {
+            updateData()
+        }
 
-        requestWeatherOneCall()
         setupAdapters(view)
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        update()
-    }
-
-    private fun update() {
-        mRefreshLayout.isRefreshing =
-                !viewModel.loadWeatherRepositories()
+    override fun onStart() {
+        super.onStart()
+        setupObserving()
+        viewModel.loadWeatherRepositories(search)
     }
 
     private fun setupAdapters(view: View) {
@@ -86,68 +97,64 @@ class WeatherFragment : Fragment(R.layout.weather_fragment) {
 
         recyclerViewHourly.adapter = adapterHourly
         recyclerViewDaily.adapter = adapterDaily
-
-        setupHourlyObserving()
-        setupDailyObserving()
     }
 
-    private fun setupHourlyObserving() {
-        viewModel.liveData.observe(requireActivity(), {
+    private fun setupObserving() {
+        viewModel.liveData.observe(requireActivity()) {
             adapterHourly.setData(it?.hourly.orEmpty().take(25))
-        })
+            adapterDaily.setData(it?.daily.orEmpty())
+            showWeatherData(it)
+            refreshLayout.isRefreshing = false
+        }
     }
 
-    private fun setupDailyObserving() {
-        viewModel.liveData.observe(requireActivity(), {
-            it.daily?.let { it1 -> adapterDaily.setData(it1) }
-        })
+    private fun updateData() {
+        viewModel.loadWeatherRepositories(search)
     }
 
-    private fun requestWeatherOneCall() {
-        viewModel.liveData.observe(requireActivity(), {
-            val weather = it
+    private fun showWeatherData(weather: WeatherOneCall) {
+        Picasso.with(activity)
+                .load("http://openweathermap.org/img/wn/" + weather.current!!.weather!![0].icon + "@2x.png")
+                .resize(100, 100)
+                .into(mImageView)
 
-            Picasso.with(activity)
-                    .load("http://openweathermap.org/img/wn/" + weather.current!!.weather!![0].icon + "@2x.png")
-                    .resize(100, 100)
-                    .into(mImageView)
+        mDateTV.text = getDate(weather.current!!.dt!!.toLong())
+        mCityTextView.text = weather.nameLocale
+        mDescTextView.text = weather.current!!.weather!![0].description
+        mTempTextView.text = weather.current!!.temp!!.toInt().toString()
+        tem_icon_unit_tv.text = resources.getText(R.string.text_unit_celsius)
 
-            mDateTV.text = getDate(weather.current!!.dt!!.toLong())
-            mCityTextView.text = weather.nameLocale
-            mDescTextView.text = weather.current!!.weather!![0].description
-            mTempTextView.text = weather.current!!.temp!!.toInt().toString() + "°"
+        text_today.text = resources.getText(R.string.text_today)
+        mInfoTitleTV.text = "Восход солнца\n"
+        mInfoDataTV.text = getTime(weather.current!!.sunrise!!.toLong()) + "\n"
 
-            mInfoTitleTV.text = "Восход солнца\n"
-            mInfoDataTV.text = getTime(weather.current!!.sunrise!!.toLong()) + "\n"
+        mInfoTitleTV.append("Заход солнца\n")
+        mInfoDataTV.append(getTime(weather.current!!.sunset!!.toLong()) + "\n")
 
-            mInfoTitleTV.append("Заход солнца\n")
-            mInfoDataTV.append(getTime(weather.current!!.sunset!!.toLong()) + "\n")
+        mInfoTitleTV.append("Чувствуется как\n")
+        mInfoDataTV.append("${weather.current!!.feelsLike!!.toInt()}°\n")
 
-            mInfoTitleTV.append("Чувствуется как\n")
-            mInfoDataTV.append("${weather.current!!.feelsLike!!.toInt()}°\n")
+        mInfoTitleTV.append("Влажность\n")
+        mInfoDataTV.append("${weather.current!!.humidity} %\n")
 
-            mInfoTitleTV.append("Влажность\n")
-            mInfoDataTV.append("${weather.current!!.humidity} %\n")
+        mInfoTitleTV.append("Давление\n")
+        mInfoDataTV.append("${weather.current!!.pressure} гПа\n")
 
-            mInfoTitleTV.append("Давление\n")
-            mInfoDataTV.append("${weather.current!!.pressure} гПа\n")
+        mInfoTitleTV.append("Облачность\n")
+        mInfoDataTV.append("${weather.current!!.clouds} %\n")
 
-            mInfoTitleTV.append("Облачность\n")
-            mInfoDataTV.append("${weather.current!!.clouds} %\n")
+        mInfoTitleTV.append("Видимость\n")
+        mInfoDataTV.append("${weather.current!!.visibility!! / 1000} км\n")
 
-            mInfoTitleTV.append("Видимость\n")
-            mInfoDataTV.append("${weather.current!!.visibility!! / 1000} км\n")
+        mInfoTitleTV.append("Уф-индекс\n")
+        mInfoDataTV.append("${weather.current!!.uvi!!.toInt()}\n")
 
-            mInfoTitleTV.append("Уф-индекс\n")
-            mInfoDataTV.append("${weather.current!!.uvi!!.toInt()}\n")
-
-            mInfoTitleTV.append("Скорость ветра\n")
-            mInfoDataTV.append("${weather.current!!.windSpeed} м/с\n")
-            if (weather.current!!.windGust != null) {
-                mInfoTitleTV.append("Порыв ветра\n")
-                mInfoDataTV.append("${weather.current!!.windGust} м/с\n")
-            }
-        })
+        mInfoTitleTV.append("Скорость ветра\n")
+        mInfoDataTV.append("${weather.current!!.windSpeed} м/с\n")
+        if (weather.current!!.windGust != null) {
+            mInfoTitleTV.append("Порыв ветра\n")
+            mInfoDataTV.append("${weather.current!!.windGust} м/с\n")
+        }
     }
 
     private fun getTime(seconds: Long): String? {

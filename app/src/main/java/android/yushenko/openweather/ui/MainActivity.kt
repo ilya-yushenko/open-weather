@@ -1,13 +1,27 @@
-package android.yushenko.openweather.ui;
+package android.yushenko.openweather.ui
 
-import android.yushenko.openweather.ui.main.WeatherFragment;
+import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
+import android.yushenko.openweather.R
+import android.yushenko.openweather.ui.main.MainFragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 
-import androidx.fragment.app.Fragment;
+class MainActivity : AppCompatActivity() {
 
-public class WeatherActivity extends SingleFragmentActivity {
+    lateinit var navController: NavController
 
-    @Override
-    protected Fragment createFragment() {
-        return new WeatherFragment();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        //        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+//        navController = navHostFragment.navController
+
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+
+        // supportFragmentManager.beginTransaction().add(R.id.container_fragment, MainFragment.newInstance()).commit()
     }
 }

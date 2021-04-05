@@ -2,7 +2,7 @@ package android.yushenko.openweather.data
 
 import android.util.Log
 import android.yushenko.openweather.data.network.common.Common
-import android.yushenko.openweather.search.Search
+import android.yushenko.openweather.model.search.Search
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

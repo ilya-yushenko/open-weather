@@ -3,4 +3,14 @@
 
     <string name="text_no_found_search">"Поиск не дал результатов"</string>
     <string name="text_search">"Поиск"</string>
+    <string name="text_sign_in">"Войти"</string>
+    <string name="text_log_in">"Вход"</string>
+    <string name="text_out">"Выйти"</string>
+    <string name="text_not_acc_quest">"У вас ещё нет аккаунта?"</string>
+    <string name="text_is_acc_quest">"Есть аккаунт?"</string>
+    <string name="text_register">"Зарегистрироваться"</string>
+    <string name="text_reg_small">"Регистрация"</string>
+    <string name="text_today">"Сегодня:"</string>
+    <string name="text_unit_celsius">"°"</string>
+
 </resources>

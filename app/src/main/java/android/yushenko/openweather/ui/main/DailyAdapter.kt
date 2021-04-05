@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.yushenko.openweather.R
-import android.yushenko.openweather.model.Daily
+import android.yushenko.openweather.model.weather.Daily
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
