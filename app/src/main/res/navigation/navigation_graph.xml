@@ -6,66 +6,84 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="android.yushenko.openweather.ui.main.MainFragment"
+        android:name="android.yushenko.openweather.ui.view.fragments.main.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="android.yushenko.openweather.ui.authentication.LoginFragment"
+        android:name="android.yushenko.openweather.ui.view.fragments.authentication.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_out"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="android.yushenko.openweather.ui.authentication.RegisterFragment"
+        android:name="android.yushenko.openweather.ui.view.fragments.authentication.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_registerOkFragment"
-            app:destination="@id/registerOkFragment" />
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/registerOkFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_in"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="android.yushenko.openweather.ui.authentication.SettingsFragment"
+        android:name="android.yushenko.openweather.ui.view.fragments.settings.SettingsFragment"
         android:label="SettingsFragment" >
         <action
-            android:id="@+id/action_settingsFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
             android:id="@+id/action_settingsFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_in_left"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerOkFragment"
-        android:name="android.yushenko.openweather.ui.authentication.RegisterOkFragment"
+        android:name="android.yushenko.openweather.ui.view.fragments.authentication.RegisterOkFragment"
         android:label="RegisterOkFragment" >
         <action
             android:id="@+id/action_registerOkFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_in"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="android.yushenko.openweather.ui.search.SearchFragment"
+        android:name="android.yushenko.openweather.ui.view.fragments.search.SearchFragment"
         android:label="search_fragment"
-        tools:layout="@layout/search_fragment" >
-        <action
-            android:id="@+id/action_searchFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/search_fragment" />
 </navigation>
