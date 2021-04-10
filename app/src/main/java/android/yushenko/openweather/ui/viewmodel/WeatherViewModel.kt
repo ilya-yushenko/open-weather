@@ -22,7 +22,7 @@ class WeatherViewModel : ViewModel() {
     var liveSignInUser = MutableLiveData<Boolean>()
     var liveEmailUser = MutableLiveData<String>()
 
-    val weatherRepository = WeatherRepository()
+    private val weatherRepository = WeatherRepository()
 
     fun loadWeather(search: Search) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -43,27 +43,6 @@ class WeatherViewModel : ViewModel() {
 
         }
     }
-
-
-//        weatherRepository.getWeatherRepository(search, object : OnWeatherRepositoryCallback {
-//            override fun onDataReady(data: WeatherOneCall?) {
-//                data?.let { liveData.value = it }
-//            }
-//        })
-//    }
-
-
-//    fun loadSearchRepositoryK(name: String) {
-//        weatherRepository.getSearchRepository(name, object : OnSearchRepositoryCallback {
-//            override fun onSearchDataReady(searches: List<Search>) {
-//                liveSearchData.postValue(searches)
-//            }
-//
-//            override fun onIsFound(isFound: Boolean) {
-//                liveIsFound.value = isFound
-//            }
-//        })
-//    }
 
     fun savePreference(search: Search) {
         weatherRepository.setSearchPreference(search)

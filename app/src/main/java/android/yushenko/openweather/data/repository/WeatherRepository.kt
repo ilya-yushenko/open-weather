@@ -1,10 +1,9 @@
 package android.yushenko.openweather.data.repository
 
-import android.yushenko.openweather.data.SearchRemoteSource
-import android.yushenko.openweather.data.WeatherRemoteDataSource
+import android.yushenko.openweather.data.repository.openweather.SearchRemoteSource
+import android.yushenko.openweather.data.repository.openweather.WeatherRemoteDataSource
 import android.yushenko.openweather.data.model.firebase.*
 import android.yushenko.openweather.data.model.authentication.User
-import android.yushenko.openweather.data.model.weather.WeatherOneCall
 import android.yushenko.openweather.data.model.search.Search
 
 class WeatherRepository {
@@ -17,29 +16,6 @@ class WeatherRepository {
 
     suspend fun getSearchData(name: String) = searchDataSource.getSearchData(name)
 
-
-//    fun getWeatherRepository(search: Search, onWeatherRepositoryCallback: OnWeatherRepositoryCallback) {
-//        remoteDataSource.getWeatherData(search, object : OnWeatherRemoteReadyCallback {
-//            override fun onRemoteDataReady(data: WeatherOneCall?) {
-//                onWeatherRepositoryCallback.onDataReady(data)
-//            }
-//        })
-//    }
-
-//
-//    fun getSearchRepository(name: String, onSearchRepositoryCallback: OnSearchRepositoryCallback) {
-//        searchDataSource.setData(name)
-//        searchDataSource.getSearchData(object : OnSearchRemoteReadyCallback {
-//            override fun onSearchRemoteDataReady(list: List<Search>) {
-//                onSearchRepositoryCallback.onSearchDataReady(list)
-//            }
-//
-//            override fun onIsFound(boolean: Boolean) {
-//                onSearchRepositoryCallback.onIsFound(boolean)
-//            }
-//
-//        })
-//    }
 
     fun setSearchPreference(search: Search) {
         dataBaseFirebase.writeDataBase(search)
@@ -94,15 +70,6 @@ class WeatherRepository {
             }
         })
     }
-}
-
-interface OnWeatherRepositoryCallback {
-    fun onDataReady(data: WeatherOneCall?)
-}
-
-interface OnSearchRepositoryCallback {
-    fun onSearchDataReady(searches: List<Search>)
-    fun onIsFound(isFound: Boolean)
 }
 
 interface OnCreateUserRepositoryCallback {

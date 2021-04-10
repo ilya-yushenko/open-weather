@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/edit_email"
-        app:layout_constraintEnd_toEndOf="@+id/edit_email"
-        app:layout_constraintStart_toStartOf="@+id/edit_email">
+        app:layout_constraintBottom_toTopOf="@+id/inputEmail"
+        app:layout_constraintEnd_toEndOf="@+id/inputEmail"
+        app:layout_constraintStart_toStartOf="@+id/inputEmail">
 
         <TextView
             android:id="@+id/textView"
@@ -25,7 +25,7 @@
             />
 
         <TextView
-            android:id="@+id/register_click"
+            android:id="@+id/toRegisterClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
@@ -61,7 +61,7 @@
         app:layout_constraintVertical_bias="0.02" />
 
     <EditText
-        android:id="@+id/edit_email"
+        android:id="@+id/inputEmail"
         android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginTop="80dp"
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/view_image" />
 
     <EditText
-        android:id="@+id/edit_password"
+        android:id="@+id/inputPassword"
         android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginTop="15dp"
@@ -87,12 +87,12 @@
         android:paddingStart="10dp"
         android:selectAllOnFocus="false"
         android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/edit_email"
-        app:layout_constraintStart_toStartOf="@+id/edit_email"
-        app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+        app:layout_constraintEnd_toEndOf="@+id/inputEmail"
+        app:layout_constraintStart_toStartOf="@+id/inputEmail"
+        app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/buttonLogin"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
@@ -102,19 +102,19 @@
         android:textAllCaps="false"
         android:textSize="16dp"
 
-        app:layout_constraintEnd_toEndOf="@+id/edit_password"
-        app:layout_constraintStart_toStartOf="@+id/edit_password"
-        app:layout_constraintTop_toBottomOf="@+id/edit_password" />
+        app:layout_constraintEnd_toEndOf="@+id/inputPassword"
+        app:layout_constraintStart_toStartOf="@+id/inputPassword"
+        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
     <TextView
-        android:id="@+id/text_wrong_login"
+        android:id="@+id/textWrongLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

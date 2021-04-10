@@ -1,8 +1,10 @@
 package android.yushenko.openweather.ui.view.fragments.search
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import android.yushenko.openweather.R
 import android.yushenko.openweather.ui.viewmodel.WeatherViewModel
@@ -39,7 +41,8 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
     }
 
     private fun toBack() {
-//        activity .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+        val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
         (activity as MainActivity).navController.popBackStack()
     }
 

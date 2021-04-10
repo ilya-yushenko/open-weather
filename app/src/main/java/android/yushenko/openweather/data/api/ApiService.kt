@@ -8,9 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    //@GET("data/2.5/onecall?&exclude=minutely&appid=5703a864f0e20a81fe6913ef3dc0e03b&lang=RU&units=metric")
-    //fun getWeatherOneCall(@Query("lat") lat: Double, @Query("lon") lon: Double): Call<WeatherOneCall>
-
     @GET("data/2.5/onecall?&exclude=minutely&appid=5703a864f0e20a81fe6913ef3dc0e03b&lang=RU&units=metric")
     suspend fun getWeatherOneCall(@Query("lat") lat: Double, @Query("lon") lon: Double): Response<WeatherOneCall>
 
