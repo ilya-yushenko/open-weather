@@ -1,29 +1,20 @@
 package android.yushenko.openweather.ui.view.fragments.authentication
 
+import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
+import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.yushenko.openweather.R
-import android.yushenko.openweather.ui.viewmodel.WeatherViewModel
 import android.yushenko.openweather.data.model.authentication.User
 import android.yushenko.openweather.ui.view.activity.MainActivity
+import android.yushenko.openweather.ui.viewmodel.WeatherViewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import kotlinx.android.synthetic.main.login_fragment.*
 
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
-
-    private lateinit var inputEmailET: EditText
-    private lateinit var inputPasswordET: EditText
-
-    private lateinit var loginInBtn: Button
-    private lateinit var registerBtn: TextView
-
-    private lateinit var showWarningsTV: TextView
 
     private val viewModel: WeatherViewModel by viewModels()
 
@@ -31,15 +22,9 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         super.onViewCreated(view, savedInstanceState)
         setupObserving()
 
-        inputEmailET = view.findViewById(R.id.edit_email)
-        inputPasswordET = view.findViewById(R.id.edit_password)
-        loginInBtn = view.findViewById(R.id.btn_login)
-        registerBtn = view.findViewById(R.id.register_click)
-        showWarningsTV = view.findViewById(R.id.text_wrong_login)
-
-        loginInBtn.setOnClickListener {
-            val email = inputEmailET.text.toString()
-            val password = inputPasswordET.text.toString()
+        buttonLogin.setOnClickListener {
+            val email = inputEmail.text.toString()
+            val password = inputPassword.text.toString()
             val user = User()
 
             if (!email.isEmpty() && !password.isEmpty()) {
@@ -47,13 +32,13 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                 user.password = password
                 signIn(user)
             } else {
-                if (email.isEmpty()) inputEmailET.background = resources.getDrawable(R.drawable.style_border_wrang)
-                if (password.isEmpty()) inputPasswordET.background = resources.getDrawable(R.drawable.style_border_wrang)
+                if (email.isEmpty()) inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
+                if (password.isEmpty()) inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
                 showWarnings("Поле не должно быть пустым")
             }
         }
 
-        registerBtn.setOnClickListener {
+        toRegisterClick.setOnClickListener {
             (activity as MainActivity).navController.navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
@@ -78,19 +63,34 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun showWarnings(text: String) {
-        showWarningsTV.setTextColor(resources.getColor(android.R.color.holo_red_dark))
-        showWarningsTV.text = text
-        val timer = object : CountDownTimer(6000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-            }
+        textWrongLogin.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+        textWrongLogin.text = text
 
-            override fun onFinish() {
-                inputEmailET.background = resources.getDrawable(R.drawable.style_border)
-                inputPasswordET.background = resources.getDrawable(R.drawable.style_border)
-                showWarningsTV.text = ""
+        inputEmail.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    v.background = resources.getDrawable(R.drawable.style_border)
+                    isInputEmpty()
+                }
             }
+            false
         }
-        timer.start()
+
+        inputPassword.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    v.background = resources.getDrawable(R.drawable.style_border)
+                    isInputEmpty()
+                }
+            }
+            false
+        }
+    }
+
+    fun isInputEmpty() {
+        if (!inputEmail.text.isEmpty() || !inputPassword.text.isEmpty()) {
+            textWrongLogin.text = ""
+        }
     }
 
 }

@@ -116,13 +116,13 @@ class WeatherFragment(private val search: Search) : Fragment(R.layout.weather_fr
 
         text_today.text = resources.getText(R.string.text_today)
         mInfoTitleTV.text = "Восход солнца\n"
-        mInfoDataTV.text = getTime(weather.current!!.sunrise!!.toLong()) + "\n"
+        mInfoDataTV.text = getTime(weather.current?.sunrise!!.toLong()) + "\n"
 
         mInfoTitleTV.append("Заход солнца\n")
         mInfoDataTV.append(getTime(weather.current!!.sunset!!.toLong()) + "\n")
 
         mInfoTitleTV.append("Чувствуется как\n")
-        mInfoDataTV.append("${weather.current!!.feelsLike!!.toInt()}°\n")
+        mInfoDataTV.append("${weather.current?.feelsLike?.toInt()}°\n")
 
         mInfoTitleTV.append("Влажность\n")
         mInfoDataTV.append("${weather.current!!.humidity} %\n")
