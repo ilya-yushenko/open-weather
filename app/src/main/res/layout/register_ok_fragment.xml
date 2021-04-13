@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/view_image"
+        android:id="@+id/viewIcon"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
@@ -43,9 +43,9 @@
         android:text="Регистрация прошла успешно"
         android:textSize="22dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/view_image"
-        app:layout_constraintStart_toStartOf="@+id/view_image"
-        app:layout_constraintTop_toBottomOf="@+id/view_image" />
+        app:layout_constraintEnd_toEndOf="@+id/viewIcon"
+        app:layout_constraintStart_toStartOf="@+id/viewIcon"
+        app:layout_constraintTop_toBottomOf="@+id/viewIcon" />
 
     <TextView
         android:id="@+id/text_thank"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_ok" />
 
     <Button
-        android:id="@+id/btn_login_back"
+        android:id="@+id/loginBack"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="40dp"

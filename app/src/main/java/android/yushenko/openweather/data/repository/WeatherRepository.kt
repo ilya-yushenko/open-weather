@@ -2,88 +2,33 @@ package android.yushenko.openweather.data.repository
 
 import android.yushenko.openweather.data.repository.openweather.SearchRemoteSource
 import android.yushenko.openweather.data.repository.openweather.WeatherRemoteDataSource
-import android.yushenko.openweather.data.model.firebase.*
 import android.yushenko.openweather.data.model.authentication.User
 import android.yushenko.openweather.data.model.search.Search
+import android.yushenko.openweather.data.repository.firebase.*
 
 class WeatherRepository {
-    private val remoteDataSource = WeatherRemoteDataSource()
+    private val weatherDataSource = WeatherRemoteDataSource()
     private val searchDataSource = SearchRemoteSource()
-    private val firebaseAuthentication = FirebaseAuthentication()
-    private val dataBaseFirebase = DataBaseFirebase()
+    private val authentication = FirebaseAuthentication()
+    private val database = DataBaseFirebase()
 
-    suspend fun getWeatherData(search: Search) = remoteDataSource.getWeatherData(search)
+    suspend fun getWeatherData(search: Search) = weatherDataSource.getWeatherData(search)
 
     suspend fun getSearchData(name: String) = searchDataSource.getSearchData(name)
 
+    suspend fun getHistorySearches() = database.getListLocals()
 
-    fun setSearchPreference(search: Search) {
-        dataBaseFirebase.writeDataBase(search)
-    }
+    fun addItemHistory(search: Search) = database.addItemHistory(search)
 
+    suspend fun createUser(user: User) = authentication.createUser(user)
 
-    fun createUser(user: User, onRepositoryFirebaseCreateUser: OnCreateUserRepositoryCallback) {
-        firebaseAuthentication.createUser(user, object : OnFirebaseCreatedUser {
-            override fun onCreatedUserOk(boolean: Boolean) {
-                if (boolean) {
-                    dataBaseFirebase.userAddData(user)
-                    firebaseAuthentication.signOut()
-                }
-                onRepositoryFirebaseCreateUser.onCreatedOk(boolean)
-            }
+    suspend fun signInUser(user: User) = authentication.signIn(user)
 
-        })
-    }
+    fun deleteItemHistory(search: Search) = database.deleteItemHistory(search)
 
-    fun signInUser(user: User, onRepositoryFirebaseSignInUser: OnSignInUserRepositoryCallback) {
-        firebaseAuthentication.signIn(user, object : OnFirebaseSignInUser {
-            override fun onSignInUserOk(boolean: Boolean) {
-                onRepositoryFirebaseSignInUser.onSignInOk(boolean)
-            }
-        } )
-    }
+    fun getEmailUser() = authentication.getEmailUser()
 
-    fun getEmailUser(onGetEmailUserRepositoryCallback: OnGetEmailUserRepositoryCallback) {
-        dataBaseFirebase.getEmailUser(object : OnEmailUserFirebaseCallback {
-            override fun onGetEmailUserFirebase(email: String) {
-                onGetEmailUserRepositoryCallback.onEmailUser(email)
-            }
-        })
-    }
+    fun signUserOut() = authentication.signOut()
 
-    fun signUserOut() {
-        firebaseAuthentication.signOut()
-    }
-
-    fun isUserSignIn(): Boolean {
-        return firebaseAuthentication.isSignIn()
-    }
-
-    fun deleteItemsDataBaseRepository(search: Search) {
-        dataBaseFirebase.deleteItemsDataBase(search)
-    }
-
-    fun getHistorySearches(onRepositoryHistoryFirebaseCallback: OnHistorySearchesRepositoryCallback) {
-        dataBaseFirebase.getListLocalsDataBase(object : OnListLocalsFirebaseCallback {
-            override fun onGetListLocalsFirebase(searches: List<Search>) {
-                onRepositoryHistoryFirebaseCallback.onHistorySearches(searches)
-            }
-        })
-    }
-}
-
-interface OnCreateUserRepositoryCallback {
-    fun onCreatedOk(boolean: Boolean)
-}
-
-interface OnSignInUserRepositoryCallback {
-    fun onSignInOk(boolean: Boolean)
-}
-
-interface OnHistorySearchesRepositoryCallback {
-    fun onHistorySearches(searches: List<Search>)
-}
-
-interface OnGetEmailUserRepositoryCallback {
-    fun onEmailUser(email: String)
+    fun isUserSignIn() = authentication.isSignIn()
 }

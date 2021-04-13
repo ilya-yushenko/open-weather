@@ -39,7 +39,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                     viewPager2.adapter = adapter
                 progress_bar.visibility = View.GONE
             }
-            viewModel.loadHistorySearchLocales()
+            viewModel.loadHistorySearch()
         } else {
             (activity as MainActivity).navController.navigate(R.id.action_mainFragment_to_loginFragment)
         }

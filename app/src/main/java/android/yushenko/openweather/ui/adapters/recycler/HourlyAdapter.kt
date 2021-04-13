@@ -25,7 +25,7 @@ class HourlyAdapter : RecyclerView.Adapter<HourlyAdapter.HourlyHolder>() {
         private val hourTV: TextView = itemView.findViewById(R.id.hour_text)
         private val windTV: TextView = itemView.findViewById(R.id.wind_text)
         private val iconIV: ImageView = itemView.findViewById(R.id.icon_image)
-        private val tempTV: TextView = itemView.findViewById(R.id.temp_tv)
+        private val tempTV: TextView = itemView.findViewById(R.id.textTemp)
 
         fun bind(hourly: Hourly) {
             Picasso.with(itemView.context)

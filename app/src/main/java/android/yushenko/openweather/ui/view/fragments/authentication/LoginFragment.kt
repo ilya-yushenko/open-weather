@@ -7,16 +7,18 @@ import android.view.View
 import android.yushenko.openweather.R
 import android.yushenko.openweather.data.model.authentication.User
 import android.yushenko.openweather.ui.view.activity.MainActivity
+import android.yushenko.openweather.ui.viewmodel.LoginViewModel
 import android.yushenko.openweather.ui.viewmodel.WeatherViewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import com.idapgroup.lifecycle.ktx.observe
 import kotlinx.android.synthetic.main.login_fragment.*
 
 
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
-    private val viewModel: WeatherViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,9 +47,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun setupObserving() {
-        viewModel.liveSignInUser.observe(requireActivity()) {
-            infoSignUser(it)
-        }
+        observe(viewModel.liveSignInUser, { infoSignUser(it) })
     }
 
     private fun infoSignUser(it: Boolean) {

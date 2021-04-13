@@ -22,7 +22,7 @@
         android:src="@drawable/ic_baseline_cloud_queue_24" />
 
     <TextView
-        android:id="@+id/temp_tv"
+        android:id="@+id/textTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

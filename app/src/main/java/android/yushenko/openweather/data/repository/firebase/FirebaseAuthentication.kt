@@ -1,55 +1,38 @@
-package android.yushenko.openweather.data.model.firebase
-
+package android.yushenko.openweather.data.repository.firebase
 
 import android.util.Log
 import android.yushenko.openweather.data.model.authentication.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthentication {
+
     private val auth: FirebaseAuth = Firebase.auth
+    private val database = DataBaseFirebase()
 
-    fun createUser(user: User, onFirebaseCreatedUser: OnFirebaseCreatedUser) {
+    suspend fun createUser(user: User) : Boolean {
+        var created = false
         auth.createUserWithEmailAndPassword(user.email, user.password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        onFirebaseCreatedUser.onCreatedUserOk(true)
-                    } else {
-                        onFirebaseCreatedUser.onCreatedUserOk(false)
-                        Log.w("TAG", "createUserWithEmail:failure", task.exception)
-                    }
-                }
+                .addOnCompleteListener {
+                    created = if (it.isSuccessful) { database.userAddData(user); signOut(); true } else false
+                }.await()
+        return created
     }
 
-    fun signIn(user: User, onFirebaseSignIn: OnFirebaseSignInUser) {
+    suspend fun signIn(user: User) : Boolean {
+        var singin = false
         auth.signInWithEmailAndPassword(user.email, user.password)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        onFirebaseSignIn.onSignInUserOk(true)
-                    } else {
-                        onFirebaseSignIn.onSignInUserOk(false)
-                    }
-                }
+                .addOnCompleteListener{ singin = it.isSuccessful
+                    Log.i("TAG", "Log: $singin")
+                }.await()
+        return singin
     }
 
-    fun signOut() {
-        Firebase.auth.signOut()
-    }
+    fun getEmailUser() = auth.currentUser?.email
 
-    fun isSignIn(): Boolean {
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            return true
-        }
-        return false
-    }
-}
+    fun signOut() = Firebase.auth.signOut()
 
-interface OnFirebaseCreatedUser {
-    fun onCreatedUserOk(boolean: Boolean)
-}
-
-interface OnFirebaseSignInUser {
-    fun onSignInUserOk(boolean: Boolean)
+    fun isSignIn() = auth.currentUser != null
 }
