@@ -18,7 +18,7 @@
 
 
     <ImageView
-        android:id="@+id/view_image"
+        android:id="@+id/viewIcon"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -40,9 +40,9 @@
         android:gravity="center"
         android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/view_image"
-        app:layout_constraintStart_toStartOf="@+id/view_image"
-        app:layout_constraintTop_toBottomOf="@+id/view_image" />
+        app:layout_constraintEnd_toEndOf="@+id/viewIcon"
+        app:layout_constraintStart_toStartOf="@+id/viewIcon"
+        app:layout_constraintTop_toBottomOf="@+id/viewIcon" />
 
     <Button
         android:id="@+id/btn_out"

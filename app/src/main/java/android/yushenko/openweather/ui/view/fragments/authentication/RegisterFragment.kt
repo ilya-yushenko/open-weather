@@ -10,9 +10,13 @@ import android.yushenko.openweather.R
 import android.yushenko.openweather.ui.viewmodel.WeatherViewModel
 import android.yushenko.openweather.data.model.authentication.User
 import android.yushenko.openweather.ui.view.activity.MainActivity
+import android.yushenko.openweather.ui.viewmodel.RegisterViewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.idapgroup.lifecycle.ktx.observe
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.inputEmail
 import kotlinx.android.synthetic.main.login_fragment.inputPassword
@@ -21,7 +25,7 @@ import kotlinx.android.synthetic.main.register_fragment.*
 
 class RegisterFragment : Fragment(R.layout.register_fragment) {
 
-    private val viewModel: WeatherViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,22 +46,20 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
             } else {
                 isInputEmpty()
             }
-
         }
-
     }
 
     private fun setupObserving() {
-        viewModel.liveCreateUser.observe(requireActivity()) {
-            infoCreatedUser(it)
-        }
+      observe(viewModel.liveCrateUserData, {
+          infoCreated(it)
+      })
     }
 
     private fun createUser(user: User) {
         viewModel.createUser(user)
     }
 
-    fun infoCreatedUser(boolean: Boolean) {
+    fun infoCreated(boolean: Boolean) {
         if (boolean) {
             (activity as MainActivity).navController.navigate(R.id.action_registerFragment_to_registerOkFragment)
         } else {
