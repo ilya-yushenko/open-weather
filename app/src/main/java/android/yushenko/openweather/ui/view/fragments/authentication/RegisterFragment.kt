@@ -17,12 +17,13 @@ import androidx.lifecycle.observe
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.idapgroup.lifecycle.ktx.observe
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.login_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.inputEmail
 import kotlinx.android.synthetic.main.login_fragment.inputPassword
 import kotlinx.android.synthetic.main.register_fragment.*
 
-
+@AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.register_fragment) {
 
     private val viewModel: RegisterViewModel by viewModels()

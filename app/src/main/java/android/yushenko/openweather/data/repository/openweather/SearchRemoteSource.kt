@@ -2,11 +2,9 @@ package android.yushenko.openweather.data.repository.openweather
 
 import android.yushenko.openweather.data.api.ApiHelper
 import android.yushenko.openweather.data.model.search.Search
-import retrofit2.Response
-import java.lang.Exception
+import javax.inject.Inject
 
-class SearchRemoteSource {
-
-    suspend fun getSearchData(name: String): List<Search> = ApiHelper.getSearchData(name)
+class SearchRemoteSource @Inject constructor(private  val api: ApiHelper) {
+    suspend fun getSearchData(name: String): List<Search> = api.getSearchData(name)
 }
 

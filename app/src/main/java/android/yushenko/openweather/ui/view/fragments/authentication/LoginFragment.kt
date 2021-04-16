@@ -13,9 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.idapgroup.lifecycle.ktx.observe
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.login_fragment.*
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.login_fragment) {
 
     private val viewModel: LoginViewModel by viewModels()
