@@ -12,9 +12,10 @@ import android.yushenko.openweather.ui.viewmodel.SearchViewModel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.search_fragment.*
 
-
+@AndroidEntryPoint
 class SearchFragment : Fragment(R.layout.search_fragment) {
 
     private val viewModel: SearchViewModel by viewModels()

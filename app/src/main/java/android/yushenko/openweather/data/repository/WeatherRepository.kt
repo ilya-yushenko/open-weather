@@ -5,16 +5,18 @@ import android.yushenko.openweather.data.repository.openweather.WeatherRemoteDat
 import android.yushenko.openweather.data.model.authentication.User
 import android.yushenko.openweather.data.model.search.Search
 import android.yushenko.openweather.data.repository.firebase.*
+import javax.inject.Inject
 
-class WeatherRepository {
-    private val weatherDataSource = WeatherRemoteDataSource()
-    private val searchDataSource = SearchRemoteSource()
+class WeatherRepository @Inject constructor(
+    private val weatherData: WeatherRemoteDataSource,
+    private val searchData: SearchRemoteSource) {
+
     private val authentication = FirebaseAuthentication()
     private val database = DataBaseFirebase()
 
-    suspend fun getWeatherData(search: Search) = weatherDataSource.getWeatherData(search)
+    suspend fun getWeatherData(search: Search) = weatherData.getWeatherData(search)
 
-    suspend fun getSearchData(name: String) = searchDataSource.getSearchData(name)
+    suspend fun getSearchData(name: String) = searchData.getSearchData(name)
 
     suspend fun getHistorySearches() = database.getListLocals()
 

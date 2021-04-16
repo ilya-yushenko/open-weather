@@ -16,10 +16,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.idapgroup.lifecycle.ktx.observe
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.weather_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class WeatherFragment(private val search: Search) : Fragment(R.layout.weather_fragment) {
 
     private val adapterDaily = DailyAdapter()
@@ -27,7 +29,6 @@ class WeatherFragment(private val search: Search) : Fragment(R.layout.weather_fr
 
     private val viewModel: WeatherViewModel by viewModels()
     private val eventViewModel: BaseViewModel by viewModels()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 

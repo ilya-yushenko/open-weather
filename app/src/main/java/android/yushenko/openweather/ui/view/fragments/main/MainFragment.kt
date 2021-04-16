@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.main_fragment.*
 
+@AndroidEntryPoint
 class MainFragment : Fragment(R.layout.main_fragment) {
 
     private lateinit var adapter: ViewPagerFragmentStateAdapter
