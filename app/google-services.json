@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1054884250944",
+    "firebase_url": "https://open-weather-d988c-default-rtdb.firebaseio.com",
+    "project_id": "open-weather-d988c",
+    "storage_bucket": "open-weather-d988c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054884250944:android:51b7e09d8f19da59d766a5",
+        "android_client_info": {
+          "package_name": "android.yushenko.openweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054884250944-dnj7odv3o8do2ru5b4r8cg9cd95o2jsv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpr7i1dLHUaBbtPVOtYbFk52ZLG4-sF1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054884250944-dnj7odv3o8do2ru5b4r8cg9cd95o2jsv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

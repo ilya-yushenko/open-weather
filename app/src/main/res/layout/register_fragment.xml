@@ -13,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/inputEmail"
-        app:layout_constraintEnd_toEndOf="@+id/inputEmail"
-        app:layout_constraintStart_toStartOf="@+id/inputEmail">
+        app:layout_constraintBottom_toTopOf="@+id/inputName"
+        app:layout_constraintEnd_toEndOf="@+id/inputName"
+        app:layout_constraintStart_toStartOf="@+id/inputName">
 
         <TextView
             android:id="@+id/textView"
@@ -61,20 +61,35 @@
         app:layout_constraintVertical_bias="0.02" />
 
     <EditText
-        android:id="@+id/inputEmail"
+        android:id="@+id/inputName"
         android:layout_width="250dp"
         android:layout_height="35dp"
         android:layout_marginTop="80dp"
         android:background="@drawable/style_border"
         android:elevation="1dp"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
+        android:hint="Name"
+        android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@+id/viewIcon"
         app:layout_constraintStart_toStartOf="@+id/viewIcon"
         app:layout_constraintTop_toBottomOf="@+id/viewIcon" />
 
+
+    <EditText
+        android:id="@+id/inputEmail"
+        android:layout_width="250dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/style_border"
+        android:elevation="1dp"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:paddingStart="10dp"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/inputName"
+        app:layout_constraintStart_toStartOf="@+id/inputName"
+        app:layout_constraintTop_toBottomOf="@+id/inputName"/>
 
     <EditText
         android:id="@+id/inputPassword"

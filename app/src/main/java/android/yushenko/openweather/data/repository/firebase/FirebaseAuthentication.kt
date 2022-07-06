@@ -1,36 +1,37 @@
 package android.yushenko.openweather.data.repository.firebase
 
-import android.util.Log
 import android.yushenko.openweather.data.model.authentication.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.channels.BroadcastChannel
+import javax.inject.Inject
 
-class FirebaseAuthentication {
+class FirebaseAuthentication @Inject constructor(
+        private val auth: FirebaseAuth,
+        private val database: DataBaseFirebase,
+) {
 
-    private val auth: FirebaseAuth = Firebase.auth
-    private val database = DataBaseFirebase()
+    val chanelRegister = BroadcastChannel<Boolean>(1)
+    val chanelLogin = BroadcastChannel<Boolean>(1)
 
-    suspend fun createUser(user: User) : Boolean {
-        var created = false
-        auth.createUserWithEmailAndPassword(user.email, user.password)
-                .addOnCompleteListener {
-                    created = if (it.isSuccessful) { database.userAddData(user); signOut(); true } else false
-                }.await()
-        return created
-    }
+    fun createUser(user: User) =
+            auth.createUserWithEmailAndPassword(user.email, user.password)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            database.userAddData(user)
+                            signOut()
+                            chanelRegister.offer(true)
+                        } else
+                            chanelRegister.offer(false)
+                    }
 
-    suspend fun signIn(user: User) : Boolean {
-        var singin = false
-        auth.signInWithEmailAndPassword(user.email, user.password)
-                .addOnCompleteListener{ singin = it.isSuccessful
-                    Log.i("TAG", "Log: $singin")
-                }.await()
-        return singin
-    }
+    fun signIn(user: User) =
+            auth.signInWithEmailAndPassword(user.email, user.password)
+                    .addOnCompleteListener {
+                        chanelLogin.offer(it.isSuccessful)
+                    }
 
-    fun getEmailUser() = auth.currentUser?.email
 
     fun signOut() = Firebase.auth.signOut()
 
