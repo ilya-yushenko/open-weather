@@ -6,29 +6,37 @@ import android.yushenko.openweather.data.model.authentication.User
 import android.yushenko.openweather.data.model.search.Search
 import android.yushenko.openweather.data.repository.firebase.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class WeatherRepository @Inject constructor(
-    private val weatherData: WeatherRemoteDataSource,
-    private val searchData: SearchRemoteSource) {
+        private val weatherData: WeatherRemoteDataSource,
+        private val searchData: SearchRemoteSource,
+        private val authentication: FirebaseAuthentication,
+        private val database: DataBaseFirebase
+) {
 
-    private val authentication = FirebaseAuthentication()
-    private val database = DataBaseFirebase()
+    fun getChannelRegisterOk() = authentication.chanelRegister
 
-    suspend fun getWeatherData(search: Search) = weatherData.getWeatherData(search)
+    fun getChannelLoginOk() = authentication.chanelLogin
 
-    suspend fun getSearchData(name: String) = searchData.getSearchData(name)
+    fun getLiveHistory() = database.listLiveData
 
-    suspend fun getHistorySearches() = database.getListLocals()
+    fun getHistorySearches() = database.loadHistory()
+
+    fun getWeatherData(search: Search) = weatherData.getWeatherData(search)
+
+    fun getSearchData(name: String) = searchData.getSearchData(name)
 
     fun addItemHistory(search: Search) = database.addItemHistory(search)
 
-    suspend fun createUser(user: User) = authentication.createUser(user)
+    fun createUser(user: User) = authentication.createUser(user)
 
-    suspend fun signInUser(user: User) = authentication.signIn(user)
+    fun signInUser(user: User) = authentication.signIn(user)
 
     fun deleteItemHistory(search: Search) = database.deleteItemHistory(search)
 
-    fun getEmailUser() = authentication.getEmailUser()
+    fun getUserData() = database.getUserData()
 
     fun signUserOut() = authentication.signOut()
 
