@@ -13,4 +13,8 @@
     <string name="text_today">"Сегодня:"</string>
     <string name="text_unit_celsius">"°"</string>
 
+    <string name="no_internet">"No internet connection. Please try again later."</string>
+    <string name="has_error">"An error has occurred. Please try again."</string>
+    <string name="unknown_exception">"Unknown Exception"</string>
+
 </resources>

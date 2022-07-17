@@ -16,7 +16,8 @@ fun DependencyHandler.design() {
 
 fun DependencyHandler.hilt() {
     add("implementation", "com.google.dagger:hilt-android:${versions.hilt}")
-    add("kapt", "com.google.dagger:hilt-compiler:${versions.hilt}")
+    add("kapt", "com.google.dagger:hilt-android-compiler:${versions.hilt}")
+    add("kapt", "androidx.hilt:hilt-compiler:1.0.0-alpha01")
 }
 
 fun DependencyHandler.coroutines() {

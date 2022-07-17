@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="android.yushenko.openweather.ui.fragments.main.start.MainFragment"
+        android:name="android.yushenko.openweather.ui.main.start.MainFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="android.yushenko.openweather.ui.fragments.login.LoginFragment"
+        android:name="android.yushenko.openweather.ui.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="android.yushenko.openweather.ui.fragments.register.RegisterFragment"
+        android:name="android.yushenko.openweather.ui.register.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_registerOkFragment"
@@ -60,11 +60,11 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="android.yushenko.openweather.ui.fragments.settings.SettingsFragment"
+        android:name="android.yushenko.openweather.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
         android:id="@+id/registerOkFragment"
-        android:name="android.yushenko.openweather.ui.fragments.register.RegisterOkFragment"
+        android:name="android.yushenko.openweather.ui.register.RegisterOkFragment"
         android:label="RegisterOkFragment" >
         <action
             android:id="@+id/action_registerOkFragment_to_loginFragment"
@@ -77,11 +77,11 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="android.yushenko.openweather.ui.fragments.search.SearchFragment"
+        android:name="android.yushenko.openweather.ui.search.SearchFragment"
         android:label="search_fragment"
         tools:layout="@layout/search_fragment" />
     <fragment
         android:id="@+id/infoFragment"
-        android:name="android.yushenko.openweather.ui.fragments.main.pager.InfoFragment"
+        android:name="android.yushenko.openweather.ui.main.pager.InfoFragment"
         android:label="InfoFragment" />
 </navigation>
