@@ -5,17 +5,17 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/baskClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
         android:gravity="center"
         android:padding="10dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/viewIcon"
         android:layout_width="150dp"
         android:layout_height="100dp"
@@ -29,25 +29,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.126" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/viewIcon"
         app:layout_constraintStart_toStartOf="@+id/viewIcon"
         app:layout_constraintTop_toBottomOf="@+id/viewIcon" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/textEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textLogin"
         app:layout_constraintStart_toStartOf="@+id/textLogin"
         app:layout_constraintTop_toBottomOf="@+id/textLogin" />
@@ -61,7 +61,7 @@
         android:elevation="1dp"
         android:text="Выйти"
         android:textAllCaps="false"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textEmail"
         app:layout_constraintStart_toStartOf="@+id/textEmail"
         app:layout_constraintTop_toBottomOf="@+id/textEmail" />
