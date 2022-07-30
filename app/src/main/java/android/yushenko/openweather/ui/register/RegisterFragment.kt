@@ -5,10 +5,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.yushenko.openweather.R
 import android.yushenko.openweather.data.model.authentication.UserInitial
+import android.yushenko.openweather.ext.observe
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.idapgroup.lifecycle.ktx.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.login_fragment.inputName
 import kotlinx.android.synthetic.main.login_fragment.inputPassword
@@ -47,7 +47,7 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
     }
 
     private fun setupObserving() {
-        observe(viewModel.liveIsCrateUser) {
+        observe(viewModel.isCrateUser) {
             infoCreated(it)
         }
     }

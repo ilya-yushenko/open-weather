@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.yushenko.openweather.R
+import android.yushenko.openweather.ext.observe
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.idapgroup.lifecycle.ktx.observe
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.login_fragment.*
 
@@ -24,7 +24,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
             val email = inputName.text.toString()
             val password = inputPassword.text.toString()
 
-            if (!email.isEmpty() && !password.isEmpty()) {
+            if (email.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.signInUser(
                     email = email,
                     password = password
@@ -45,7 +45,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
     }
 
     private fun setupObserving() {
-        observe(viewModel.liveIsSignIn) { infoSignUser(it) }
+        observe(viewModel.isSignIn) { infoSignUser(it) }
     }
 
     private fun infoSignUser(it: Boolean) {
@@ -81,8 +81,8 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         }
     }
 
-    fun isInputEmpty() {
-        if (!inputName.text.isEmpty() || !inputPassword.text.isEmpty()) {
+    private fun isInputEmpty() {
+        if (inputName.text.isNotEmpty() || inputPassword.text.isNotEmpty()) {
             textWrongLogin.text = ""
         }
     }

@@ -4,9 +4,9 @@ import android.yushenko.openweather.data.model.authentication.UserInitial
 import android.yushenko.openweather.data.repository.db.DataBaseFirebaseRepository
 import android.yushenko.openweather.data.repository.oauth.OauthFirebaseRepository
 import android.yushenko.openweather.shared.BaseViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +16,8 @@ class RegisterViewModel @Inject constructor(
     private val dataBaseRepository: DataBaseFirebaseRepository,
 ) : BaseViewModel() {
 
-    private val _liveIsCrateUser = MutableLiveData<Boolean>()
-    val liveIsCrateUser: LiveData<Boolean> = _liveIsCrateUser
+    private val _isCrateUser = MutableStateFlow(false)
+    val isCrateUser: StateFlow<Boolean> = _isCrateUser
 
     fun createUser(user: UserInitial) {
         launch {
@@ -26,7 +26,7 @@ class RegisterViewModel @Inject constructor(
                 if (isCrate) {
                     dataBaseRepository.userAddData(user)
                 }
-                _liveIsCrateUser.value = isCrate
+                _isCrateUser.value = isCrate
             }
         }
     }

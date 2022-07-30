@@ -1,6 +1,6 @@
 package android.yushenko.openweather.data.repository.weather
 
-import android.yushenko.openweather.data.api.ApiRetrofitService
+import android.yushenko.openweather.data.service.ApiRetrofitService
 import android.yushenko.openweather.data.model.response.location.LocationResponse
 import android.yushenko.openweather.data.model.response.search.SearchResponse
 import android.yushenko.openweather.data.model.response.settings.Units

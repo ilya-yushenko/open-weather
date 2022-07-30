@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.main_fragment.*
 class MainFragment : Fragment(R.layout.main_fragment) {
 
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var adapter: ViewPagerFragmentStateAdapter
+    private lateinit var adapter: WeatherPageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -38,7 +38,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     private fun setupObserving() {
         observe(viewModel.savedList) {
             val isData = if (it.isNotEmpty()) {
-                adapter = ViewPagerFragmentStateAdapter(it, requireActivity())
+                adapter = WeatherPageAdapter(it, requireActivity())
                 viewPager.adapter = adapter
                 true
             } else {

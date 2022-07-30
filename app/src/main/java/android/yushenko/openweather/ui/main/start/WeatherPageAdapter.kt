@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class ViewPagerFragmentStateAdapter(private val list: List<Location>, activity: FragmentActivity) :
+class WeatherPageAdapter(private val list: List<Location>, activity: FragmentActivity) :
     FragmentStateAdapter(activity) {
 
     override fun getItemCount(): Int = list.size
