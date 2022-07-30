@@ -9,12 +9,13 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
+class SettingsFragment : BaseFragment<SettingsFragmentBinding>(
+    SettingsFragmentBinding::inflate
+) {
 
     private val viewModel: SettingsViewModel by viewModels()
 
     override fun init() {
-
         setupListener()
         setupObserves()
     }
