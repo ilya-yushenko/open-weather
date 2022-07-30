@@ -6,25 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import java.lang.reflect.ParameterizedType
 
-abstract class BaseFragment<VB : ViewBinding> : Fragment() {
+abstract class BaseFragment<VB : ViewBinding>(
+    private val bindingInflater: (inflater: LayoutInflater) -> VB
+) : Fragment() {
+
     private var _binding: VB? = null
-    val binding: VB get() = _binding!!
+
+    val binding: VB
+        get() = _binding as VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val type = javaClass.genericSuperclass
-        val clazz = (type as ParameterizedType).actualTypeArguments.first() as Class<VB>
-        val method = clazz.getMethod(
-            "inflate", LayoutInflater::class.java,
-            ViewGroup::class.java, Boolean::class.java
-        )
-        _binding = method.invoke(null, layoutInflater, container, false) as VB
-        return _binding!!.root
+        _binding = bindingInflater.invoke(inflater)
+        if (_binding == null)
+            throw IllegalArgumentException("Binding cannot be null")
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
