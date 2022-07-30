@@ -1,4 +1,4 @@
-package android.yushenko.openweather.data.api
+package android.yushenko.openweather.data.service
 
 import android.yushenko.openweather.data.model.response.weather.WeatherDataResponse
 import android.yushenko.openweather.data.model.response.search.SearchResponse

@@ -1,39 +1,43 @@
 package android.yushenko.openweather.ui.settings
 
-import android.os.Bundle
-import android.view.View
-import android.yushenko.openweather.R.layout
 import android.yushenko.openweather.data.model.authentication.UserInitial
-import androidx.fragment.app.Fragment
+import android.yushenko.openweather.databinding.SettingsFragmentBinding
+import android.yushenko.openweather.ext.observe
+import android.yushenko.openweather.shared.BaseFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.idapgroup.lifecycle.ktx.observe
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.settings_fragment.*
 
 @AndroidEntryPoint
-class SettingsFragment : Fragment(layout.settings_fragment) {
+class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
     private val viewModel: SettingsViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun init() {
 
-        observe(viewModel.liveCurrentUser) {
-            setData(it)
-        }
+        setupListener()
+        setupObserves()
+    }
 
-        baskClick.setOnClickListener {
+    private fun setupListener() {
+        binding.baskClick.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        buttonOut.setOnClickListener {
+        binding.buttonOut.setOnClickListener {
             viewModel.signUserOut()
             findNavController().popBackStack()
         }
     }
 
+    private fun setupObserves() {
+        observe(viewModel.currentUser) {
+            setData(it)
+        }
+    }
+
     private fun setData(user: UserInitial) {
-        textLogin.text = user.name
-        textEmail.text = user.email
+        binding.textLogin.text = user.name
+        binding.textEmail.text = user.email
     }
 }

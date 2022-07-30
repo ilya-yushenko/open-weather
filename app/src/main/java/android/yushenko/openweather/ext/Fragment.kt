@@ -12,14 +12,6 @@ import kotlinx.coroutines.flow.onEach
 val Fragment.viewLifecycleScope: CoroutineScope
     get() = viewLifecycleOwner.lifecycleScope
 
-fun <T> Flow<T>.subscribe(f: Fragment, action: suspend (T) -> Unit) {
-    this.onEach(action).launchIn(f.viewLifecycleScope)
-}
-
-fun <T> Flow<T>.subscribe(scope: CoroutineScope, action: suspend (T) -> Unit) {
-    this.onEach(action).launchIn(scope)
-}
-
 fun <T> CoroutineScope.observe(flow: Flow<T>, action: suspend (T) -> Unit) {
     flow.onEach(action).launchIn(this)
 }

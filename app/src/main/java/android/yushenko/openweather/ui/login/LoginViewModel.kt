@@ -6,6 +6,8 @@ import android.yushenko.openweather.shared.BaseViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,8 +16,8 @@ class LoginViewModel @Inject constructor(
     private val oauthRepository: OauthFirebaseRepository,
 ) : BaseViewModel() {
 
-    private val _liveIsSignIn = MutableLiveData<Boolean>()
-    val liveIsSignIn: LiveData<Boolean> = _liveIsSignIn
+    private val _isSignIn = MutableStateFlow(false)
+    val isSignIn: StateFlow<Boolean> = _isSignIn
 
     fun signInUser(email: String, password: String) {
         launch {
@@ -27,7 +29,7 @@ class LoginViewModel @Inject constructor(
                     password = password
                 )
             ).also {
-                _liveIsSignIn.value = it.user != null
+                _isSignIn.value = it.user != null
             }
         }
     }

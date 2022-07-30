@@ -1,6 +1,6 @@
-package android.yushenko.openweather.data.api
+package android.yushenko.openweather.data.factory
 
-import android.yushenko.openweather.data.api.RetrofitConst.TIME_OUT
+import android.yushenko.openweather.data.factory.RetrofitConst.TIME_OUT
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

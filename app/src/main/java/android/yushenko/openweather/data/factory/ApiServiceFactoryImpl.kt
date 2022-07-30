@@ -1,5 +1,6 @@
-package android.yushenko.openweather.data.api
+package android.yushenko.openweather.data.factory
 
+import android.yushenko.openweather.data.service.ApiRetrofitService
 import android.yushenko.openweather.data.repository.weather.WeatherApiRepository
 import android.yushenko.openweather.data.repository.weather.WeatherApiRepositoryImpl
 
