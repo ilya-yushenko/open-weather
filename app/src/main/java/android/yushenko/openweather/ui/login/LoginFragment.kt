@@ -1,25 +1,22 @@
 package android.yushenko.openweather.ui.login
 
-import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.yushenko.openweather.R
+import android.yushenko.openweather.databinding.LoginFragmentBinding
 import android.yushenko.openweather.ext.observe
-import androidx.fragment.app.Fragment
+import android.yushenko.openweather.shared.BaseFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.login_fragment.*
 
 @AndroidEntryPoint
-class LoginFragment : Fragment(R.layout.login_fragment) {
+class LoginFragment : BaseFragment<LoginFragmentBinding>(
+    LoginFragmentBinding::inflate
+) {
 
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupObserving()
-
+    override fun LoginFragmentBinding.onInitListener() {
         buttonLogin.setOnClickListener {
             val email = inputName.text.toString()
             val password = inputPassword.text.toString()
@@ -41,14 +38,13 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         toRegisterClick.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-
     }
 
-    private fun setupObserving() {
+    override fun LoginFragmentBinding.onInitObserving() {
         observe(viewModel.isSignIn) { infoSignUser(it) }
     }
 
-    private fun infoSignUser(it: Boolean) {
+    private fun LoginFragmentBinding.infoSignUser(it: Boolean) {
         if (it) {
             findNavController().popBackStack()
         } else {
@@ -56,7 +52,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         }
     }
 
-    private fun showWarnings(text: String) {
+    private fun LoginFragmentBinding.showWarnings(text: String) {
         textWrongLogin.setTextColor(resources.getColor(android.R.color.holo_red_dark))
         textWrongLogin.text = text
 
@@ -81,7 +77,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         }
     }
 
-    private fun isInputEmpty() {
+    private fun LoginFragmentBinding.isInputEmpty() {
         if (inputName.text.isNotEmpty() || inputPassword.text.isNotEmpty()) {
             textWrongLogin.text = ""
         }

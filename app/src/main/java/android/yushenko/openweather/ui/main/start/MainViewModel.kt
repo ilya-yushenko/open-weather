@@ -5,8 +5,6 @@ import android.yushenko.openweather.data.repository.oauth.OauthFirebaseRepositor
 import android.yushenko.openweather.model.Location
 import android.yushenko.openweather.model.toLocationUi
 import android.yushenko.openweather.shared.BaseViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
