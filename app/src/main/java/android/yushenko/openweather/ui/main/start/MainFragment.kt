@@ -1,48 +1,44 @@
 package android.yushenko.openweather.ui.main.start
 
-import android.os.Bundle
 import android.view.View
 import android.yushenko.openweather.R
+import android.yushenko.openweather.databinding.MainFragmentBinding
 import android.yushenko.openweather.ext.observe
+import android.yushenko.openweather.shared.BaseFragment
 import android.yushenko.openweather.ui.main.pager.InfoFragment
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.main_fragment.*
 
 @AndroidEntryPoint
-class MainFragment : Fragment(R.layout.main_fragment) {
+class MainFragment : BaseFragment<MainFragmentBinding>(
+    MainFragmentBinding::inflate
+) {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var adapter: WeatherPageAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        image_settings_click.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
-        }
-
-        image_search_click.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
-        }
-
-        setupObserving()
-    }
-
-    override fun onStart() {
-        super.onStart()
+    override fun MainFragmentBinding.onInitViews() {
         userSignIn()
     }
 
-    private fun setupObserving() {
+    override fun MainFragmentBinding.onInitListener() {
+        settingsView.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
+        }
+        searchView.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
+        }
+    }
+
+    override fun MainFragmentBinding.onInitObserving() {
         observe(viewModel.savedList) {
             val isData = if (it.isNotEmpty()) {
-                adapter = WeatherPageAdapter(it, requireActivity())
-                viewPager.adapter = adapter
+                adapter = WeatherPageAdapter(it, this@MainFragment)
+                binding.pagerView .adapter = adapter
                 true
             } else {
-                requireActivity().supportFragmentManager.beginTransaction()
+                parentFragmentManager.beginTransaction()
                     .add(R.id.fragmentContainer, InfoFragment()).commit()
                 false
             }
@@ -51,15 +47,17 @@ class MainFragment : Fragment(R.layout.main_fragment) {
     }
 
     private fun isList(boolean: Boolean) {
-        when (boolean) {
-            true -> {
-                fragmentContainer.visibility = View.GONE; viewPager.visibility = View.VISIBLE
+        with(binding) {
+            when (boolean) {
+                true -> {
+                    fragmentContainer.visibility = View.GONE; pagerView.visibility = View.VISIBLE
+                }
+                false -> {
+                    pagerView.visibility = View.GONE; fragmentContainer.visibility = View.VISIBLE
+                }
             }
-            false -> {
-                viewPager.visibility = View.GONE; fragmentContainer.visibility = View.VISIBLE
-            }
+            progressView.visibility = View.GONE
         }
-        progress_bar.visibility = View.GONE
     }
 
     private fun userSignIn() {
@@ -69,5 +67,4 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             }
         }
     }
-
 }

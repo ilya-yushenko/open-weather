@@ -1,19 +1,17 @@
 package android.yushenko.openweather.ui.register
 
-import android.os.Bundle
-import android.view.View
 import android.yushenko.openweather.R
-import androidx.fragment.app.Fragment
+import android.yushenko.openweather.databinding.RegisterOkFragmentBinding
+import android.yushenko.openweather.shared.BaseFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.register_ok_fragment.*
 
 @AndroidEntryPoint
-class RegisterOkFragment : Fragment(R.layout.register_ok_fragment) {
+class RegisterOkFragment : BaseFragment<RegisterOkFragmentBinding>(
+    RegisterOkFragmentBinding::inflate
+) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun RegisterOkFragmentBinding.onInitListener() {
         loginBack.setOnClickListener {
             findNavController().navigate(R.id.action_registerOkFragment_to_loginFragment)
         }

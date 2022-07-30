@@ -13,7 +13,7 @@
         android:elevation="1dp">
 
         <ImageView
-            android:id="@+id/image_settings_click"
+            android:id="@+id/settingsView"
             android:layout_width="30dp"
             android:layout_height="25dp"
             android:layout_marginStart="16dp"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/image_search_click"
+            android:id="@+id/searchView"
             android:layout_width="30dp"
             android:layout_height="25dp"
             android:layout_marginEnd="16dp"
@@ -43,13 +43,13 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_search_click"
-            app:layout_constraintStart_toEndOf="@+id/image_settings_click"
+            app:layout_constraintEnd_toStartOf="@+id/searchView"
+            app:layout_constraintStart_toEndOf="@+id/settingsView"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+        android:id="@+id/pagerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp" />
@@ -61,7 +61,7 @@
         android:layout_marginTop="50dp" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/progressView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />

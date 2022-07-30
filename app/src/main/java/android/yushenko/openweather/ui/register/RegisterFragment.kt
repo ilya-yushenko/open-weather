@@ -1,32 +1,23 @@
 package android.yushenko.openweather.ui.register
 
-import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.yushenko.openweather.R
 import android.yushenko.openweather.data.model.authentication.UserInitial
+import android.yushenko.openweather.databinding.RegisterFragmentBinding
 import android.yushenko.openweather.ext.observe
-import androidx.fragment.app.Fragment
+import android.yushenko.openweather.shared.BaseFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.login_fragment.inputName
-import kotlinx.android.synthetic.main.login_fragment.inputPassword
-import kotlinx.android.synthetic.main.register_fragment.*
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment(R.layout.register_fragment) {
+class RegisterFragment : BaseFragment<RegisterFragmentBinding>(
+    RegisterFragmentBinding::inflate
+) {
 
     private val viewModel: RegisterViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupObserving()
-
-        toLoginClick.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
+    override fun RegisterFragmentBinding.onInitListener() {
         buttonRegister.setOnClickListener {
             val name = inputName.text.toString()
             val email = inputEmail.text.toString()
@@ -44,12 +35,13 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
                 isInputEmpty()
             }
         }
+        toLoginClick.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
-    private fun setupObserving() {
-        observe(viewModel.isCrateUser) {
-            infoCreated(it)
-        }
+    override fun RegisterFragmentBinding.onInitObserving() {
+        observe(viewModel.isCrateUser, ::infoCreated)
     }
 
     private fun infoCreated(boolean: Boolean) {
@@ -61,68 +53,71 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
     }
 
     private fun showWarnings(text: String) {
-        textWrongRegister.setTextColor(resources.getColor(android.R.color.holo_red_dark))
-        textWrongRegister.text = text
+        with(binding) {
+            textWrongRegister.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+            textWrongRegister.text = text
 
-        inputName.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_UP -> {
-                    v.background = resources.getDrawable(R.drawable.style_border)
-                    isInputEmpty()
+            inputName.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        v.background = resources.getDrawable(R.drawable.style_border)
+                        isInputEmpty()
+                    }
                 }
+                false
             }
-            false
-        }
 
-        inputEmail.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_UP -> {
-                    v.background = resources.getDrawable(R.drawable.style_border)
-                    isInputEmpty()
+            inputEmail.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        v.background = resources.getDrawable(R.drawable.style_border)
+                        isInputEmpty()
+                    }
                 }
+                false
             }
-            false
-        }
 
-        inputPassword.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_UP -> {
-                    v.background = resources.getDrawable(R.drawable.style_border)
-                    isInputEmpty()
+            inputPassword.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_UP -> {
+                        v.background = resources.getDrawable(R.drawable.style_border)
+                        isInputEmpty()
+                    }
                 }
+                false
             }
-            false
         }
     }
 
     private fun isInputEmpty() {
-        when {
-            inputName.text.isEmpty() && inputEmail.text.isEmpty() && inputPassword.text.isEmpty() -> {
-                inputName.background = resources.getDrawable(R.drawable.style_border_wrang)
-                inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
-                inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
-                showWarnings("Поля не должны быть пустыми")
+        with(binding) {
+            when {
+                inputName.text.isEmpty() && inputEmail.text.isEmpty() && inputPassword.text.isEmpty() -> {
+                    inputName.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    showWarnings("Поля не должны быть пустыми")
+                }
+
+                inputEmail.text.isEmpty() -> {
+                    inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    showWarnings("Поле не должно быть пустым")
+                }
+
+                inputName.text.isEmpty() -> {
+                    inputName.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    showWarnings("Поле не должно быть пустым")
+                }
+
+                inputPassword.text.isEmpty() -> {
+                    inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    showWarnings("Поле не должно быть пустым")
+                }
+
+                inputName.text.isNotEmpty() && inputPassword.text.isNotEmpty() ->
+                    textWrongRegister.text = ""
+
             }
-
-            inputEmail.text.isEmpty() -> {
-                inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
-                showWarnings("Поле не должно быть пустым")
-            }
-
-            inputName.text.isEmpty() -> {
-                inputName.background = resources.getDrawable(R.drawable.style_border_wrang)
-                showWarnings("Поле не должно быть пустым")
-            }
-
-            inputPassword.text.isEmpty() -> {
-                inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
-                showWarnings("Поле не должно быть пустым")
-            }
-
-            inputName.text.isNotEmpty() && inputPassword.text.isNotEmpty() ->
-                textWrongRegister.text = ""
-
         }
-
     }
 }

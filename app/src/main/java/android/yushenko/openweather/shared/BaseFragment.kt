@@ -29,10 +29,15 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        binding.onInitViews()
+        binding.onInitListener()
+        binding.onInitObserving()
+
     }
 
-    abstract fun init()
+    open fun VB.onInitViews() {}
+    open fun VB.onInitListener() {}
+    open fun VB.onInitObserving() {}
 
     override fun onDestroy() {
         _binding = null

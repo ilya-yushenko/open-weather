@@ -11,7 +11,10 @@
     <string name="text_register">"Зарегистрироваться"</string>
     <string name="text_reg_small">"Регистрация"</string>
     <string name="text_today">"Сегодня:"</string>
-    <string name="text_unit_celsius">"°"</string>
+    <string name="unit_celsius">"°"</string>
+
+    <string name="text_unit_celsius">"%d°"</string>
+    <string name="text_unit_ms">"%.1f м/с"</string>
 
     <string name="no_internet">"No internet connection. Please try again later."</string>
     <string name="has_error">"An error has occurred. Please try again."</string>

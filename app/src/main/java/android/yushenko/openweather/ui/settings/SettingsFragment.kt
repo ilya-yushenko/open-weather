@@ -15,12 +15,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>(
 
     private val viewModel: SettingsViewModel by viewModels()
 
-    override fun init() {
-        setupListener()
-        setupObserves()
-    }
-
-    private fun setupListener() {
+    override fun SettingsFragmentBinding.onInitListener() {
         binding.baskClick.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -31,10 +26,8 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>(
         }
     }
 
-    private fun setupObserves() {
-        observe(viewModel.currentUser) {
-            setData(it)
-        }
+    override fun SettingsFragmentBinding.onInitObserving() {
+        observe(viewModel.currentUser, ::setData)
     }
 
     private fun setData(user: UserInitial) {
