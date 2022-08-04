@@ -6,6 +6,7 @@ import android.yushenko.openweather.data.model.authentication.UserInitial
 import android.yushenko.openweather.databinding.RegisterFragmentBinding
 import android.yushenko.openweather.ext.observe
 import android.yushenko.openweather.shared.BaseFragment
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,13 +55,16 @@ class RegisterFragment : BaseFragment<RegisterFragmentBinding>(
 
     private fun showWarnings(text: String) {
         with(binding) {
-            textWrongRegister.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+            textWrongRegister.setTextColor(
+                ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+            )
             textWrongRegister.text = text
 
             inputName.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_UP -> {
-                        v.background = resources.getDrawable(R.drawable.style_border)
+                        v.background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.style_border)
                         isInputEmpty()
                     }
                 }
@@ -70,7 +74,8 @@ class RegisterFragment : BaseFragment<RegisterFragmentBinding>(
             inputEmail.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_UP -> {
-                        v.background = resources.getDrawable(R.drawable.style_border)
+                        v.background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.style_border)
                         isInputEmpty()
                     }
                 }
@@ -80,7 +85,8 @@ class RegisterFragment : BaseFragment<RegisterFragmentBinding>(
             inputPassword.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_UP -> {
-                        v.background = resources.getDrawable(R.drawable.style_border)
+                        v.background =
+                            ContextCompat.getDrawable(requireContext(), R.drawable.style_border)
                         isInputEmpty()
                     }
                 }
@@ -93,24 +99,30 @@ class RegisterFragment : BaseFragment<RegisterFragmentBinding>(
         with(binding) {
             when {
                 inputName.text.isEmpty() && inputEmail.text.isEmpty() && inputPassword.text.isEmpty() -> {
-                    inputName.background = resources.getDrawable(R.drawable.style_border_wrang)
-                    inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
-                    inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    inputName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
+                    inputEmail.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
+                    inputPassword.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
                     showWarnings("Поля не должны быть пустыми")
                 }
 
                 inputEmail.text.isEmpty() -> {
-                    inputEmail.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    inputEmail.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
                     showWarnings("Поле не должно быть пустым")
                 }
 
                 inputName.text.isEmpty() -> {
-                    inputName.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    inputName.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
                     showWarnings("Поле не должно быть пустым")
                 }
 
                 inputPassword.text.isEmpty() -> {
-                    inputPassword.background = resources.getDrawable(R.drawable.style_border_wrang)
+                    inputPassword.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
                     showWarnings("Поле не должно быть пустым")
                 }
 

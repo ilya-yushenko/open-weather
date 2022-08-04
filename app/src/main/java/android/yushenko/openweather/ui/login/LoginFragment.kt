@@ -5,6 +5,7 @@ import android.yushenko.openweather.R
 import android.yushenko.openweather.databinding.LoginFragmentBinding
 import android.yushenko.openweather.ext.observe
 import android.yushenko.openweather.shared.BaseFragment
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,9 +29,9 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(
                 )
             } else {
                 if (email.isEmpty()) inputName.background =
-                    resources.getDrawable(R.drawable.style_border_wrang)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
                 if (password.isEmpty()) inputPassword.background =
-                    resources.getDrawable(R.drawable.style_border_wrang)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.style_border_wrang)
                 showWarnings("Поле не должно быть пустым")
             }
         }
@@ -53,13 +54,16 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(
     }
 
     private fun LoginFragmentBinding.showWarnings(text: String) {
-        textWrongLogin.setTextColor(resources.getColor(android.R.color.holo_red_dark))
+        textWrongLogin.setTextColor(
+            ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark)
+        )
         textWrongLogin.text = text
 
         inputName.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    v.background = resources.getDrawable(R.drawable.style_border)
+                    v.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border)
                     isInputEmpty()
                 }
             }
@@ -69,7 +73,8 @@ class LoginFragment : BaseFragment<LoginFragmentBinding>(
         inputPassword.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
-                    v.background = resources.getDrawable(R.drawable.style_border)
+                    v.background =
+                        ContextCompat.getDrawable(requireContext(), R.drawable.style_border)
                     isInputEmpty()
                 }
             }

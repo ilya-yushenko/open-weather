@@ -35,7 +35,7 @@ class MainFragment : BaseFragment<MainFragmentBinding>(
         observe(viewModel.savedList) {
             val isData = if (it.isNotEmpty()) {
                 adapter = WeatherPageAdapter(it, this@MainFragment)
-                binding.pagerView .adapter = adapter
+                binding.pagerView.adapter = adapter
                 true
             } else {
                 parentFragmentManager.beginTransaction()
@@ -61,10 +61,8 @@ class MainFragment : BaseFragment<MainFragmentBinding>(
     }
 
     private fun userSignIn() {
-        when (viewModel.isUserSignIn()) {
-            false -> {
-                findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
-            }
+        if (!viewModel.isUserSignIn()) {
+            findNavController().navigate(R.id.action_mainFragment_to_loginFragment)
         }
     }
 }
