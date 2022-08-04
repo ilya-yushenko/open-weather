@@ -1,7 +1,6 @@
 package android.yushenko.openweather.data.repository.oauth
 
 import android.yushenko.openweather.data.model.authentication.UserInitial
-import android.yushenko.openweather.data.repository.oauth.OauthFirebaseRepository
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
@@ -11,19 +10,19 @@ class OauthFirebaseRepositoryImpl constructor(
     private val firebaseAuth: FirebaseAuth
 ) : OauthFirebaseRepository {
 
-    override suspend fun createUser(userInitial: UserInitial): AuthResult =
+    override suspend fun createUser(curentUser: UserInitial): AuthResult =
         withTimeout(5000L) {
             firebaseAuth.createUserWithEmailAndPassword(
-                userInitial.email,
-                userInitial.password
+                curentUser.email,
+                curentUser.password
             ).await()
         }
 
-    override suspend fun signIn(userInitial: UserInitial): AuthResult =
+    override suspend fun signIn(currentUser: UserInitial): AuthResult =
         withTimeout(5000L) {
             firebaseAuth.signInWithEmailAndPassword(
-                userInitial.email,
-                userInitial.password
+                currentUser.email,
+                currentUser.password
             ).await()
         }
 

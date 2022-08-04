@@ -1,24 +1,22 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("com.google.gms.google-services")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
-    compileSdkVersion(versions.targetApi)
+    compileSdk = versions.targetApi
 
     defaultConfig {
         applicationId = "android.yushenko.openweather"
-        minSdkVersion(versions.minApi)
-        targetSdkVersion(versions.targetApi)
-        versionCode(versions.versionCode)
-        versionName(versions.versionName)
+        minSdk = versions.minApi
+        targetSdk = versions.targetApi
+        versionCode = versions.versionCode
+        versionName = versions.versionName
     }
-
-    aaptOptions.cruncherEnabled = false
 
     buildTypes {
         named("debug") {
@@ -35,24 +33,21 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    lintOptions {
-        isAbortOnError = false
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    buildFeatures.viewBinding = true
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    kotlin()
     core()
     design()
     coroutines()

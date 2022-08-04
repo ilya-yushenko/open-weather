@@ -1,17 +1,17 @@
 package android.yushenko.openweather.ui.main.pager
 
-import android.os.Bundle
-import android.view.View
 import android.yushenko.openweather.R
-import androidx.fragment.app.Fragment
+import android.yushenko.openweather.databinding.InfoFragmentBinding
+import android.yushenko.openweather.shared.BaseFragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.info_fragment.*
 
 @AndroidEntryPoint
-class InfoFragment : Fragment(R.layout.info_fragment) {
+class InfoFragment : BaseFragment<InfoFragmentBinding>(
+    InfoFragmentBinding::inflate
+) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun InfoFragmentBinding.onInitListener() {
         openSearchFragment.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
         }

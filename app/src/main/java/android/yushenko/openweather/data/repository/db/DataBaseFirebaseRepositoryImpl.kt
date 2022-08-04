@@ -27,7 +27,7 @@ class DataBaseFirebaseRepositoryImpl constructor(
 
     override fun fetchSavedList() {
         remoteDb.child("users")
-            .child(firebaseAuth.currentUser.uid)
+            .child(firebaseAuth.currentUser?.uid ?: "undefined")
             .child("history")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -48,28 +48,28 @@ class DataBaseFirebaseRepositoryImpl constructor(
 
     override suspend fun getUserData(): UserInitial? = withTimeout(5000L) {
         remoteDb.child("users")
-            .child(firebaseAuth.currentUser.uid)
+            .child(firebaseAuth.currentUser?.uid ?: "undefined")
             .child("user")
             .get().await().getValue(UserInitial::class.java)
     }
 
     override fun userAddData(user: UserInitial) {
         remoteDb.child("users")
-            .child(firebaseAuth.currentUser.uid)
+            .child(firebaseAuth.currentUser?.uid ?: "undefined")
             .child("user")
             .setValue(user.copy(password = ""))
     }
 
     override fun addItemHistory(model: LocationEntity) {
         val path = remoteDb.child("users")
-            .child(firebaseAuth.currentUser.uid)
+            .child(firebaseAuth.currentUser?.uid ?: "undefined")
         path.child("locale").setValue(model)
         path.child("history").child(model.uuid).setValue(model)
     }
 
     override fun deleteItemHistory(uuid: String) {
         remoteDb.child("users")
-            .child(firebaseAuth.currentUser.uid)
+            .child(firebaseAuth.currentUser?.uid ?: "undefined")
             .child("history")
             .child(uuid)
             .setValue(null)
