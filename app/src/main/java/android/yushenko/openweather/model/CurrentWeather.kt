@@ -7,6 +7,7 @@ import kotlin.math.roundToInt
 data class CurrentWeather(
     val iconUrl: String,
     val localeName: String,
+    val country: String,
     val date: Long,
     val description: String,
     val temp: Int,
@@ -22,9 +23,10 @@ data class CurrentWeather(
     val windGust: Double,
 )
 
-fun CurrentResponse.toCurrentWeather(localeName: String) = CurrentWeather(
+fun CurrentResponse.toCurrentWeather(localeName: String, country: String) = CurrentWeather(
     iconUrl = weather.first().icon.toUrl(),
     localeName = localeName,
+    country = country,
     date = dt,
     description = weather.first().description,
     temp = temp.roundToInt(),

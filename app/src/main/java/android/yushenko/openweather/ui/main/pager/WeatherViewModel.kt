@@ -5,6 +5,7 @@ import android.yushenko.openweather.data.repository.db.DataBaseFirebaseRepositor
 import android.yushenko.openweather.data.repository.weather.WeatherApiRepository
 import android.yushenko.openweather.model.*
 import android.yushenko.openweather.shared.BaseViewModel
+import android.yushenko.openweather.shared.emptyString
 import android.yushenko.openweather.shared.initLoading
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,7 +35,7 @@ class WeatherViewModel @Inject constructor(
             weatherApiRepository.getWeatherData(
                 model = model.toLocationResponse()
             ).also { weather ->
-                weather.current.toCurrentWeather(model.city).also {
+                weather.current.toCurrentWeather(model.city, emptyString()).also {
                     _currentWeather.emit(it)
                 }
                 weather.hourly.take(25).map {

@@ -14,10 +14,23 @@
     <string name="unit_celsius">"°"</string>
 
     <string name="text_unit_celsius">"%d°"</string>
+    <string name="text_unit_percent">"%d%%"</string>
     <string name="text_unit_ms">"%.1f м/с"</string>
 
     <string name="no_internet">"No internet connection. Please try again later."</string>
     <string name="has_error">"An error has occurred. Please try again."</string>
     <string name="unknown_exception">"Unknown Exception"</string>
+
+    <string name="text_cap">"- -"</string>
+
+    <!--Home Screen-->
+    <string name="home_screen_local">"%s,"</string>
+    <string name="home_screen_today_date">"Today, %s"</string>
+    <string name="home_screen_wind">"Wind"</string>
+    <string name="home_screen_index_uv">"Index UV"</string>
+    <string name="home_screen_feel_like">"Feel like"</string>
+    <string name="home_screen_humidity">"Humidity"</string>
+    <string name="home_screen_today">"Today"</string>
+    <string name="home_screen_another_days">"Another 7 days"</string>
 
 </resources>

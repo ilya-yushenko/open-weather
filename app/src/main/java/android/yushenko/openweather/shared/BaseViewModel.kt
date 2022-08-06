@@ -1,5 +1,6 @@
 package android.yushenko.openweather.shared
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.idapgroup.lifecycle.ktx.SingleLiveEvent
@@ -31,4 +32,5 @@ open class BaseViewModel : ViewModel(), CoroutineScope {
     }
 
     val viewState = MutableLiveData<ViewState>(ViewState.Idle)
+    val loadingState = mutableStateOf<ViewState>(ViewState.Idle)
 }
