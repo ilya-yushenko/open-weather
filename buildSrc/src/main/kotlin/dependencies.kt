@@ -23,6 +23,7 @@ fun DependencyHandler.design() {
     add("implementation", "androidx.constraintlayout:constraintlayout:${versions.constraint}")
     add("implementation", "com.google.android.material:material:${versions.material}")
     add("implementation", "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    add("implementation", "com.airbnb.android:lottie-compose:4.0.0")
 }
 
 fun DependencyHandler.hilt() {
@@ -71,9 +72,7 @@ fun DependencyHandler.firebase() {
 fun DependencyHandler.navigation() {
     add("implementation", "androidx.navigation:navigation-fragment-ktx:${versions.navigation}")
     add("implementation", "androidx.navigation:navigation-ui-ktx:${versions.navigation}")
-    add(
-        "implementation",
-        "androidx.navigation:navigation-dynamic-features-fragment:${versions.navigation}"
+    add("implementation", "androidx.navigation:navigation-dynamic-features-fragment:${versions.navigation}"
     )
 }
 

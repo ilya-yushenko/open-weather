@@ -57,6 +57,8 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("com.google.android.gms:play-services-location:20.0.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
     core()
     compose()
     design()

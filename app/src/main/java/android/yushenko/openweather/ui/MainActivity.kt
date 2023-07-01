@@ -2,6 +2,7 @@ package android.yushenko.openweather.ui
 
 import android.os.Bundle
 import android.yushenko.openweather.ui.home.HomeScreen
+import android.yushenko.openweather.ui.location.LocationScreen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable(route = "test") {
                             HomeScreen()
+//                            LocationScreen()
                         }
                     }
                 }

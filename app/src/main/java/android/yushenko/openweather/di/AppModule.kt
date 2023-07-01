@@ -12,6 +12,7 @@ import android.yushenko.openweather.data.repository.settings.SettingsRepository
 import android.yushenko.openweather.data.repository.settings.SettingsRepositoryImpl
 import android.yushenko.openweather.data.repository.weather.WeatherApiRepository
 import android.yushenko.openweather.shared.Constants
+import android.yushenko.openweather.ui.location.util.LocationManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -83,6 +84,13 @@ object AppModule {
         sharedPreferences = sharedPreferences,
         editor = editor,
         gson = gson,
+    )
+
+    @[Provides]
+    fun provideLocationManager(
+        @ApplicationContext context: Context
+    ): LocationManager = LocationManager(
+        context = context
     )
 
 }

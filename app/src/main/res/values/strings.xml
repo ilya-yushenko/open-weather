@@ -23,6 +23,10 @@
 
     <string name="text_cap">"- -"</string>
 
+    <!--Location Screen-->
+    <string name="location_screen_determine">"We determine your location"</string>
+    <string name="location_screen_ready">"Ready."</string>
+
     <!--Home Screen-->
     <string name="home_screen_local">"%s,"</string>
     <string name="home_screen_today_date">"Today, %s"</string>
