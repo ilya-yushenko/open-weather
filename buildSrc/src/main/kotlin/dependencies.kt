@@ -58,7 +58,6 @@ fun DependencyHandler.okhttp() {
 fun DependencyHandler.lifecycle() {
     add("implementation", "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}")
     add("implementation", "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    add("implementation", "com.idapgroup:lifecycle-ktx:1.0.3")
 }
 
 fun DependencyHandler.firebase() {
