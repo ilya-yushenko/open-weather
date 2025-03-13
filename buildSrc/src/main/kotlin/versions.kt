@@ -15,7 +15,7 @@ object versions {
     val lifecycle = "2.2.0"
     val firebase = "30.3.1"
 
-    val androidToolsVersion = "7.2.1"
+    val androidToolsVersion = "8.8.0"
 
     val minApi = 21
     val targetApi = 32

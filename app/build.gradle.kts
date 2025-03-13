@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+    namespace = "android.yushenko.openweather"
     compileSdk = versions.targetApi
 
     defaultConfig {
@@ -47,11 +48,6 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = versions.compose
-    }
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
     }
 }
 
