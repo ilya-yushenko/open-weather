@@ -1,12 +1,12 @@
 package android.yushenko.openweather.data.repository.weather
 
-import android.yushenko.openweather.data.service.ApiRetrofitService
 import android.yushenko.openweather.data.model.response.location.LocationResponse
 import android.yushenko.openweather.data.model.response.search.SearchResponse
 import android.yushenko.openweather.data.model.response.settings.Units
 import android.yushenko.openweather.data.model.response.weather.WeatherDataResponse
+import android.yushenko.openweather.data.service.ApiRetrofitService
 
-private const val APP_ID = "2fe33e8f98b90ba79130c937d64be144"
+private const val APP_ID = "6960084fef590dc618fd30a2cde979b0"
 
 class WeatherApiRepositoryImpl constructor(
     private val retrofit: ApiRetrofitService
