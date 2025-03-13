@@ -3,16 +3,25 @@ package android.yushenko.openweather.ui.location
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.util.Log
+import android.widget.Toast
 import android.yushenko.openweather.R
 import android.yushenko.openweather.ui.theme.LightBlue
 import android.yushenko.openweather.ui.theme.LightOrange
 import android.yushenko.openweather.ui.theme.WhiteGray
 import android.yushenko.openweather.ui.theme.robotoFamily
+import android.yushenko.openweather.util.PermissionsComponent
+import android.yushenko.openweather.util.PermissionsManager
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -30,7 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.*
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.coroutines.flow.onEach
 
 @Preview
 @Composable
@@ -41,34 +55,49 @@ fun LocationScreen(
     val state = viewModel.state.value
     val context = LocalContext.current
 
-//    val permissions = arrayOf(
-//        Manifest.permission.ACCESS_COARSE_LOCATION,
-//        Manifest.permission.ACCESS_FINE_LOCATION
-//    )
-//
-//    val launcherMultiplePermissions = rememberLauncherForActivityResult(
-//        ActivityResultContracts.RequestMultiplePermissions()
-//    ) { permissions ->
-//        val areGranted = permissions.values.reduce { acc, next -> acc && next }
-//        if (areGranted) {
-//            viewModel.getLocation()
-//        } else {
-//
-//        }
-//    }
+    val permissions = arrayOf(
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_FINE_LOCATION
+    )
+
 
     val launcherMultiplePermissions = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissionsMap ->
-        val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
-        if (areGranted) {
-            // Use location
-        } else {
-            // Show dialog
+        if (permissionsMap.isNotEmpty()) {
+            Log.i("DEB_TAG", "permissionsMap= $permissionsMap")
+            val areGranted = permissionsMap.values.reduce { acc, next -> acc && next }
+            if (areGranted) {
+                Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     SideEffect {
+        val permissionsManager: PermissionsManager =
+            PermissionsComponent.Initializer()
+                .context(context)
+                .prepare()
+
+
+        permissionsManager.subscribe(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ).onEach {
+
+        }
+
+        val result = permissionsManager.request(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        permissionsManager.navigateToOsAppSettings()
+
+
+
         val permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -78,12 +107,19 @@ fun LocationScreen(
 
         checkAndRequestLocationPermissions(
             context = context,
-            permissions = arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ),
+            permissions = permissions,
             launcher = launcherMultiplePermissions
         )
+
+
+//
+//        val permissionCheckResult = ContextCompat.checkSelfPermission(context, permissions)
+//
+//        if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+//
+//        } else {
+//            permissionLauncher.launch(permissions)
+//        }
     }
 
     val composition by rememberLottieComposition(
@@ -127,25 +163,30 @@ fun LocationScreen(
                 .size(250.dp)
         )
 
-
-        Text(
-            text = if (state.status == LocationStatus.Determinate)
-                stringResource(R.string.location_screen_determine)
-            else stringResource(R.string.location_screen_ready),
-            textAlign = TextAlign.Center,
-            style = TextStyle(
-                fontFamily = robotoFamily,
-                fontWeight = if (state.status == LocationStatus.Determinate)
-                    FontWeight.Normal
-                else FontWeight.Medium,
-                fontSize = 16.sp
-            ),
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(WhiteGray)
                 .align(alignment = Alignment.BottomCenter)
-                .padding(16.dp)
-        )
+                .padding(bottom = 100.dp)
+        ) {
+            Text(
+                text = if (state.status == LocationStatus.Determinate)
+                    stringResource(R.string.location_screen_determine)
+                else stringResource(R.string.location_screen_ready),
+                textAlign = TextAlign.Center,
+                style = TextStyle(
+                    fontFamily = robotoFamily,
+                    fontWeight = if (state.status == LocationStatus.Determinate)
+                        FontWeight.Normal
+                    else FontWeight.Medium,
+                    fontSize = 16.sp
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(WhiteGray)
+                    .align(alignment = Alignment.BottomCenter)
+                    .padding(16.dp)
+            )
+        }
     }
 }
 

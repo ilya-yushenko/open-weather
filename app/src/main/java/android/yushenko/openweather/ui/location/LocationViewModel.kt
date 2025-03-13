@@ -29,7 +29,7 @@ class LocationViewModel @Inject constructor(
 //    }
 
     fun getLocation() {
-        initLoading(loadingState)
+        initLoading(viewState)
         _state.value = state.value.copy(
             status = LocationStatus.Determinate
         )
