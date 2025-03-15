@@ -1,6 +1,11 @@
 [versions]
 # Gradle plugins
-androidGradlePlugin = "8.8.0"
+agp = "8.8.0"
+
+android-compileSdk = "35"
+android-minSdk = "24"
+android-targetSdk = "35"
+
 kotlin = "1.9.20"
 googleServices = "4.4.1"
 hilt = "2.50"
@@ -105,7 +110,8 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
