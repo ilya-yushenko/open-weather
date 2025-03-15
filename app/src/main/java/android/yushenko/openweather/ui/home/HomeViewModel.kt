@@ -43,7 +43,7 @@ class HomeViewModel @Inject constructor(
                 weather.hourly.take(25).map {
                     it.toHourlyWeather()
                 }.toMutableList().also {
-                    it.removeFirst()
+                    it.removeAt(0)
                     _state.value = state.value.copy(
                         hourlyWeather = it
                     )
@@ -51,7 +51,7 @@ class HomeViewModel @Inject constructor(
                 weather.daily.map {
                     it.toDailyWeather()
                 }.toMutableList().also {
-                    it.removeFirst()
+                    it.removeAt(0)
                     _state.value = state.value.copy(
                         dailyWeather = it
                     )

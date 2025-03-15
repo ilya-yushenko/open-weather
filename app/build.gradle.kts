@@ -1,36 +1,38 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("com.google.gms.google-services")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-    id("kotlin-parcelize")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.hilt)
+    kotlin("kapt")
 }
 
 android {
     namespace = "android.yushenko.openweather"
-    compileSdk = versions.targetApi
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "android.yushenko.openweather"
-        minSdk = versions.minApi
-        targetSdk = versions.targetApi
-        versionCode = versions.versionCode
-        versionName = versions.versionName
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
     }
 
     buildTypes {
-        named("debug") {
+        debug {
             isDebuggable = true
         }
-        named("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+        release {
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     compileOptions {
@@ -46,29 +48,69 @@ android {
         compose = true
         viewBinding = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = versions.compose
-    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     api(files("../libs/idapgroup-lifecycle-ktx-1.0.3.aar"))
 
+    implementation("com.google.android.gms:play-services-location:21.1.0")
 
-    implementation("com.google.android.gms:play-services-location:20.0.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    core()
-    compose()
-    design()
-    coroutines()
-    hilt()
-    picasso()
-    fragment()
-    retrofit()
-    okhttp()
-    lifecycle()
-    firebase()
-    navigation()
-    test()
+    // AndroidX Core
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.material)
+    implementation(libs.androidx.swiperefreshlayout)
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.activity.compose)
+
+    // Dependency Injection (Hilt)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.play.services)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
+
+    // Images
+    implementation(libs.picasso)
+    implementation(libs.lottie.compose)
+    implementation(libs.landscapist.coil)
+    implementation(libs.accompanist.swiperefresh)
+
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    testImplementation(libs.androidx.compose.ui.test.junit4)
 }
